@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "stylus": "^0.64.0"
+  },
+  "scripts": {
+  	"stylus:watch": "stylus wwwroot/resources/stylus -o wwwroot/css --watch"
+  }
+}
