@@ -1,0 +1,16 @@
+/* Centering items */
+centerItems(top, right, down, left)
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: top right down left;
+
+centerItemsHorizontally(right, left)
+  display: flex;
+  align-items: center;
+  padding: 0 right 0 left;
+
+centerItemsVertically(top, down)
+  display: flex;
+  justify-content: center;
+  padding: top 0 down 0;

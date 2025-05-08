@@ -2,7 +2,30 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="home">
+    <div class="header">
+        <a asp-controller="Home" asp-action="Index">
+            <img src="~/resources/img/logo-dark.svg" alt="The text 'FW'" data-checkTheme=""/>
+        </a>
+        <h1>Welcome to the FriendWiki!</h1>
+        <p>Welcome to the FriendWiki ᠆ The wiki for all the shenanigans with friends.</p>
+        
+        <form>
+            <input type="text" placeholder="Search for articles" id="search-box"/>
+            <select id="search-type">
+                <option value="articles">Articles</option>
+                <option value="users">Users</option>
+            </select>
+        </form>
+    </div>
+    
+    <div class="options">
+        <div>Don't know where to start?</div>
+        <ul class="anchors">
+            <li><a asp-controller="Article" asp-action="Random">Go to a random article</a></li>
+            <li><a asp-controller="Creator" asp-action="Create">Create an article</a></li>
+        </ul>
+    </div>
 </div>
+
+<script src="~/js/home.js"></script>

@@ -3,6 +3,7 @@
     "stylus": "^0.64.0"
   },
   "scripts": {
-  	"stylus:watch": "stylus wwwroot/resources/stylus -o wwwroot/css --watch"
+  	"stylus:watch": "stylus wwwroot/resources/stylus/site -o wwwroot/css --watch",
+    "stylus:build_pages": "bash compile_css.sh"
   }
 }
