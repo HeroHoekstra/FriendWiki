@@ -1,0 +1,19 @@
+@{
+    var article = ViewData["article"] as Article;
+}
+
+@if (article != null)
+{
+<div>
+    <h1>@article.Title</h1>
+    <p>@article.Lead</p>
+    
+    @foreach (var paragraph in article.Paragraphs)
+    {
+        <div>
+            <h2>@paragraph.Title</h2>
+            <p>@paragraph.Body</p>
+        </div>
+    }
+</div>
+}

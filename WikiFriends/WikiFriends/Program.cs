@@ -1,6 +1,8 @@
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 using WikiFriends.Models;
+using WikiFriends.Repository;
+using WikiFriends.Repository.Interface;
 
 Env.Load();
 
@@ -14,6 +16,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
                            $"password={Env.GetString("DB_PASSWORD")};";
     options.UseMySQL(connectionString);
 });
+
+builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

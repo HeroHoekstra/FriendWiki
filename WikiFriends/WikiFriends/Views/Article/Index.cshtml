@@ -1,7 +1,17 @@
 @{
     ViewData["Title"] = "Article";
+
+    List<Article>? list = ViewData["Articles"] as List<Article>;
 }
 
 <div class="text-center">
-    Lorem ipsum
+    <ul>
+    @if (list != null)
+    {
+        @foreach (var item in list)
+        {
+            <li>@item.Title</li>
+        }
+    }
+    </ul>
 </div>

@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using WikiFriends.Models;
+using WikiFriends.Repository.Interface;
 
 namespace WikiFriends.Repository;
 
-public class Repository<T> where T : class, IEntity
+public class Repository<T> : IRepository<T> where T : class, IEntity
 {
     private readonly AppDbContext _context;
 
