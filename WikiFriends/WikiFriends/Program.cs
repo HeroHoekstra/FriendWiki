@@ -1,4 +1,19 @@
+using DotNetEnv;
+using Microsoft.EntityFrameworkCore;
+using WikiFriends.Models;
+
+Env.Load();
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    var connectionString = $"server={Env.GetString("DB_HOST")};" +
+                           $"database={Env.GetString("DB_NAME")};" +
+                           $"user={Env.GetString("DB_USER")};" +
+                           $"password={Env.GetString("DB_PASSWORD")};";
+    options.UseMySQL(connectionString);
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
