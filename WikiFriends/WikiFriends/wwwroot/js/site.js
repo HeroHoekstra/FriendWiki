@@ -4,6 +4,8 @@ const applyThemeImages = () => {
     themed.each((i, e) => {
         const $el = $(e);
         let src = $el.attr('src');
+        if (!src)
+            src = $el.attr('href');
 
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             src = src.replace(/light/g, 'dark');
