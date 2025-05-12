@@ -11,9 +11,9 @@
         <p>Welcome to the FriendWiki ᠆ The wiki for all the shenanigans with friends.</p>
         
         
-        <form>
+        <form asp-controller="Article" asp-action="Search" method="get" id="search-form">
             <div class="search-section">
-                <input type="text" placeholder="Search for articles" class="search" id="search-box"/>
+                <input type="text" placeholder="Search for articles" class="search" id="search-box" name="query"/>
                 <select class="search" id="search-type">
                     <option value="articles">Articles</option>
                     <option value="users">Users</option>
@@ -28,7 +28,7 @@
         <div>Don't know where to start?</div>
         <ul class="anchors">
             <li><a asp-controller="Article" asp-action="Random">Go to a random article</a></li>
-            <li><a asp-controller="Creator" asp-action="Create">Create an article</a></li>
+            <li><a asp-controller="Article" asp-action="Create">Create an article</a></li>
         </ul>
     </div>
 </div>

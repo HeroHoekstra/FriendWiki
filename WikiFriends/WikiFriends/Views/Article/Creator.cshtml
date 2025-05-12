@@ -1,0 +1,30 @@
+@{
+    ViewData["Title"] = "Creator";
+}
+
+<div>
+    <form>
+        <div>
+            <h1 id="page-title" contenteditable>Title</h1>
+            <p id="page-lead" contenteditable>Lead</p>
+        </div>
+
+        <div class="paragraphs">
+            <div>
+                <h2 contenteditable>Paragraph Title</h2>
+                <p contenteditable>Paragraph Body</p>
+                <button class="p-button">Add Paragraph</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div hidden id="template-paragraph">
+    <div class="paragraph">
+        <h2 class="p-title" name="p-title" contenteditable>Paragraph Title</h2>
+        <p class="p-body" name="p-body" contenteditable>Paragraph Body</p>
+        <button class="p-button">Add Paragraph</button>
+    </div>
+</div>
+
+<script src="~/js/creator.js"></script>

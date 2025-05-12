@@ -25,6 +25,8 @@ public class ArticleController : Controller
         return View();
     }
 
+    #region Fetching Articles
+    
     [HttpGet("{id}")]
     public async Task<IActionResult> GetArticle([FromRoute] int id)
     {
@@ -35,5 +37,29 @@ public class ArticleController : Controller
         }
         ViewData["Article"] = article;
         return View("Article");
+    }
+
+    [HttpGet("search")]
+    public async Task<IActionResult> Search(string query)
+    {
+        var articles = await _articleRepo.GetArticlesByTitle(query);
+        ViewData["Articles"] = articles;
+        
+        return View("Index");
+    }
+
+    [HttpGet("random")]
+    public async Task<IActionResult> Random()
+    {
+        ViewData["Article"] = await _articleRepo.GetRandomArticle();
+        return View("Article");
+    }
+
+    #endregion
+    
+    [HttpGet("creator")]
+    public IActionResult Create()
+    {
+        return View("Creator");
     }
 }
