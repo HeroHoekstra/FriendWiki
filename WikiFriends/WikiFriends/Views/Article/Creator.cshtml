@@ -2,28 +2,35 @@
     ViewData["Title"] = "Creator";
 }
 
-<div>
-    <form>
-        <div>
-            <h1 id="page-title" contenteditable>Title</h1>
-            <p id="page-lead" contenteditable>Lead</p>
-        </div>
-
-        <div class="paragraphs">
-            <div>
-                <h2 contenteditable>Paragraph Title</h2>
-                <p contenteditable>Paragraph Body</p>
-                <button class="p-button">Add Paragraph</button>
+<div class="main">
+    <nav>
+        <a href="#top">Back to top</a>
+        
+        <!-- TODO -->
+        <ul class="paragraph-nav"></ul>
+    </nav>
+    
+    <div class="article">
+        <form>
+            <div id="top">
+                <h1 id="page-title" name="title" contenteditable>Title</h1>
+                <div class="break-line"></div>
+                <p id="page-lead" name="lead" contenteditable>Lead</p>
+                <button class="p-add-button first-add">Add Paragraph</button>
             </div>
-        </div>
-    </form>
+
+            <div class="paragraphs"></div>
+        </form>
+    </div>
 </div>
 
 <div hidden id="template-paragraph">
     <div class="paragraph">
-        <h2 class="p-title" name="p-title" contenteditable>Paragraph Title</h2>
-        <p class="p-body" name="p-body" contenteditable>Paragraph Body</p>
-        <button class="p-button">Add Paragraph</button>
+        <h2 class="p-title" name="p_title" contenteditable>Paragraph Title</h2>
+        <div class="break-line"></div>
+        <p class="p-body" name="p_body" contenteditable>Paragraph Body</p>
+        <button class="p-add-button">Add Paragraph</button>
+        <button class="p-del-button">Remove Paragraph</button>
     </div>
 </div>
 

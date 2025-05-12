@@ -1,0 +1,25 @@
+@import "../../site/functions.styl"
+
+.main
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  >*
+    padding: 5px;
+    margin: 5px;
+    border-radius: 10px;
+    background-color: var(--text-200);
+
+  nav
+    width: 10vw;
+
+  .article
+    flex: 1;
+    padding: 15px;   
+    
+    h1, h2
+      margin: 3px;
+
+    .break-line
+      breakLine(100%, var(--primary-200));
