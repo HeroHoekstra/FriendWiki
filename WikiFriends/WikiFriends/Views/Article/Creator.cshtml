@@ -11,26 +11,26 @@
     </nav>
     
     <div class="article">
-        <form>
-            <div id="top">
-                <h1 id="page-title" name="title" contenteditable>Title</h1>
-                <div class="break-line"></div>
-                <p id="page-lead" name="lead" contenteditable>Lead</p>
-                <div class="buttons">
-                    <button class="p-add-button first-add button">Add Paragraph</button>
-                </div>
+        <div id="top">
+            <h1 id="page-title" contenteditable>Title</h1>
+            <div class="break-line"></div>
+            <p id="page-lead"  contenteditable>Lead</p>
+            <div class="buttons">
+                <button class="p-add-button first-add button">Add Paragraph</button>
             </div>
+        </div>
 
-            <div class="paragraphs"></div>
-        </form>
+        <div class="paragraphs"></div>
+        
+        <button class="submit button">Submit</button>
     </div>
 </div>
 
 <div hidden id="template-paragraph">
-    <div class="paragraph">
-        <h2 class="p-title" name="p_title" contenteditable>Paragraph Title</h2>
+    <div class="paragraph" data-location="0">
+        <h2 class="p-title" contenteditable>Paragraph Title</h2>
         <div class="break-line"></div>
-        <p class="p-body" name="p_body" contenteditable>Paragraph Body</p>
+        <p class="p-body" contenteditable>Paragraph Body</p>
         <div class="buttons">
             <button class="p-add-button add-button button">Add Paragraph</button>
             <button class="p-del-button delete-button button">Remove Paragraph</button>

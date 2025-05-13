@@ -4,16 +4,35 @@
 
 @if (article != null)
 {
-<div>
-    <h1>@article.Title</h1>
-    <p>@article.Lead</p>
+    <div class="main">
+        <nav>
+            <a href="#top">Back to top</a>
+        
+            <!-- TODO -->
+            <ul class="paragraph-nav"></ul>
+        </nav>
     
-    @foreach (var paragraph in article.Paragraphs)
-    {
-        <div>
-            <h2>@paragraph.Title</h2>
-            <p>@paragraph.Body</p>
+        <div class="article">
+            <div id="top">
+                <h1 id="page-title">@article.Title</h1>
+                <div class="break-line"></div>
+                <p id="page-lead">@article.Lead</p>
+            </div>
+
+            <div class="paragraphs">
+                @foreach (Paragraph paragraph in article.Paragraphs.OrderBy(p => p.Location))
+                {
+                    <div class="paragraph">
+                        <h2 class="p-title">@paragraph.Title</h2>
+                        <div class="break-line"></div>
+                        <p class="p-body">@paragraph.Body</p>
+                    </div>
+                }
+            </div>
         </div>
-    }
-</div>
+    </div>
+}
+else
+{
+    
 }

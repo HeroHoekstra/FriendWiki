@@ -4,6 +4,7 @@ public class Paragraph : IEntity
 {
     public long Id { get; set; }
     
+    public int Location { get; set; }
     public string Title { get; set; }
     public string Body { get; set; }
 

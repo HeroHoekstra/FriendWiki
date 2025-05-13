@@ -35,7 +35,15 @@ public class ArticleController : Controller
         {
             return NotFound();
         }
+        
         ViewData["Article"] = article;
+        
+        Console.WriteLine(article.Paragraphs.Count);
+
+        foreach (var p in article.Paragraphs)
+        {
+            Console.WriteLine(p);
+        }
         return View("Article");
     }
 
@@ -57,9 +65,56 @@ public class ArticleController : Controller
 
     #endregion
     
+    #region Article Editing
+    
     [HttpGet("creator")]
-    public IActionResult Create()
+    public IActionResult CreatePage()
     {
         return View("Creator");
     }
+
+    [HttpPost("creator/create")]
+    public async Task<IActionResult> Create(
+        [FromForm] string title, [FromForm] string lead,
+        [FromForm] List<string> p_title, [FromForm] List<string> p_body)
+    {
+        if (p_title.Count != p_body.Count)
+        {
+            return BadRequest("Mismatch number of fields");
+        }
+        
+        // Create main Article
+        Article article = new()
+        {
+            Title = title,
+            Lead = lead
+        };
+
+        for (int i = 0; i < p_body.Count; i++) // This is assuming that p_title and p_body are in the same order
+        {
+            Paragraph current = new()
+            {
+                Location = i,
+                Title = p_title[i],
+                Body = p_body[i],
+                Article = article
+            };
+            article.Paragraphs.Add(current);
+        }
+
+        try
+        {
+            await _articleRepo.Add(article);
+            await _articleRepo.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Something went wrong:\n{ex.Message}");
+            return BadRequest($"Something went wrong trying to upload article:\n{ex.Message}");
+        }
+        
+        return Json(new { success = true, articleId = article.Id });
+    }
+    
+    #endregion
 }

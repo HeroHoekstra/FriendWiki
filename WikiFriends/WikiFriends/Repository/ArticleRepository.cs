@@ -13,6 +13,14 @@ public class ArticleRepository : Repository<Article>, IArticleRepository
         _context = context;
     }
 
+    public new async Task<Article?> GetById(long id)
+    {
+        return await _context.Set<Article>()
+            .Include(a => a.Paragraphs)
+            .Where(a => a.Id == id)
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<List<Article>> GetArticlesByTitle(string title)
     {
         return await _context.Set<Article>()

@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace WikiFriends.Models;
 
 public class Article : IEntity
