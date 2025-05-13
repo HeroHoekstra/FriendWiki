@@ -1,2 +1,24 @@
-/* For now, this file is only here for the scoped functions */
-@import "Article.styl"
+@import "Article.styl" // Basically copy the entire regular article style
+
+*[contenteditable]:focus-visible
+  outline: none;
+  
+.buttons
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  
+  .button
+    margin: 5px;
+  
+/* Add buttons */
+.button, .add-button
+  button(5px 10px, var(--primary-300));
+.button:hover, .add-button:hover
+  button(5px 10px, var(--primary-400));
+  
+/* Remove buttons */
+.delete-button
+  button(5px 10px, var(--secondary-300));
+.delete-button:hover
+  button(5px 10px, var(--secondary-400));
