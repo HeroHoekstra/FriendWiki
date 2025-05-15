@@ -41,7 +41,7 @@ public class ArticleRepository : Repository<Article>, IArticleRepository
     public async Task<Article?> GetRandomArticle()
     {
         return await _context.Set<Article>()
-            .OrderBy(a => Guid.NewGuid())
+            .OrderBy(_ => EF.Functions.Random())
             .FirstOrDefaultAsync();
     }
 }

@@ -25,6 +25,7 @@ $(document).ready(() => {
         e.preventDefault();
         addParagraph($(this), true);
         setLocations();
+        updateNav();
     });
     
     $('.submit').on('click', function(e) {
@@ -59,7 +60,8 @@ function addParagraph(caller, first = false) {
     
     title.on('input', function() {
         data.paragraph[location].p_title = $(this).text();
-        console.log(data);
+        
+        $(`#nav-${location}`).text($(this).text());
     });
     body.on('input', function() {
         data.paragraph[location].p_body = $(this).text();
@@ -70,12 +72,14 @@ function addParagraph(caller, first = false) {
         e.preventDefault();
         addParagraph($(this));
         setLocations();
+        updateNav();
     });
     
     $(element).on('click', '.p-del-button', function(e) {
         e.preventDefault();
         if (confirm(`Are you sure you want to delete ${title.text()}?`)) {
             element.remove();
+            updateNav();
         }
     });
 }
@@ -84,7 +88,15 @@ function setLocations() {
     const paragraphs = $('.paragraph');
     paragraphs.each(function(i, e) {
        $(e).attr('data-location', `${i}`);
+       $(e).id = `paragraph-${i}`;
     });
+}
+
+function updateNav() {
+    const nav = $('.paragraph-nav');
+    
+    // Remove all nav items
+    nav.html('');
 }
 
 function submit() {
@@ -106,7 +118,7 @@ function submit() {
           if (json.success && json.articleId) {
               window.location.href = `/article/${json.articleId}`;
           } else {
-              console.error("这不起作用！"); // "这不起作用！" means "This did not work!" btw.
+              console.error("这不起作用！");
           }
       })
       .catch(err => console.log(err));
