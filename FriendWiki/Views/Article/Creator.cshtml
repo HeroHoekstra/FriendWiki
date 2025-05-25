@@ -1,7 +1,26 @@
 @{
-
+    ViewData["Title"] = "Creator";
 }
 
 <div>
+    <div>
+        <h1 class="title" contenteditable>Title</h1>
+        <p class="lead" contenteditable>Lead</p>
+    </div>
     
+    <div class="content">
+        <div class="paragraph">
+            <button onclick="addParagraph($(this))">add paragraph</button>
+        </div>
+    </div>
 </div>
+
+<div id="paragraph-template" hidden>
+    <div class="paragraph">
+        <h2 class="p-title" contenteditable>Paragraph Title</h2>
+        <p class="p-body" contenteditable>Paragraph body</p>
+        <button onclick="addParagraph($(this))">add paragraph</button>
+    </div>
+</div>
+
+<script src="~/js/creator.js"></script>
