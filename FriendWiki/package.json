@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "stylus": "^0.64.0",
+    "watch": "^1.0.2"
+  },
+  "scripts": {
+    "stylus:watch": "stylus -w wwwroot/stylus/styl -o wwwroot/css",
+    "stylus:watch_scoped": "watch 'bash ./compile_css.sh' wwwroot/stylus/scoped"
+  }
+}

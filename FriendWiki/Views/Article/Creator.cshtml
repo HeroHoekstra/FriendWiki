@@ -10,7 +10,7 @@
     
     <div class="content">
         <div class="paragraph">
-            <button onclick="addParagraph($(this))">add paragraph</button>
+            <button onclick="addParagraph($(this).parent())">add paragraph</button>
         </div>
     </div>
 </div>
@@ -19,7 +19,23 @@
     <div class="paragraph">
         <h2 class="p-title" contenteditable>Paragraph Title</h2>
         <p class="p-body" contenteditable>Paragraph body</p>
-        <button onclick="addParagraph($(this))">add paragraph</button>
+        
+        <div class="images"></div>
+        
+        <button onclick="addParagraph($(this).parent())">add paragraph</button>
+        <button onclick="removeParagraph($(this).parent())">remove paragraph</button>
+    </div>
+</div>
+
+<div id="image-template" hidden>
+    <div class="image" data-preview="true">
+        <span class="material-symbols-rounded i-add i-add-preview">add</span>
+        <img src="" alt="Your image description" class="i-add" style="display:none;" />
+        
+        <div class="image-alt" style="display:none;">
+            <p class="i-alt" contenteditable>Your image description</p>
+            <button onclick="removeImage($(this).parent().parent())">remove image</button>
+        </div>
     </div>
 </div>
 
