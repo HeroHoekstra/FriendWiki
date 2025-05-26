@@ -17,8 +17,6 @@ $(document).ready(function () {
 
 // Paragraphs
 function editableParagraph(node) {
-    //const position = $(paragraph).data("position");
-
     if (!data.paragraphs[node]) {
         data.paragraphs[node] = { 
             title: "Paragraph Title", 

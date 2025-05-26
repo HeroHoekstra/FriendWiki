@@ -3,11 +3,24 @@
 }
 
 <div>
+    <div class="summary-wrapper">
+        <div class="summary">
+            <h2>Summary title</h2>
+            <div class="summary-image">
+                <span class="material-symbols-rounded s-i-add s-i-add-preview">add</span>
+                <img src="" alt="Your image description" class="i-add" style="display:none;" />
+                <p contenteditable>Your image description</p>
+            </div>
+            
+            <div class="summary-content"></div>
+        </div>
+    </div>
+    
     <div>
         <h1 class="title" contenteditable>Title</h1>
         <p class="lead" contenteditable>Lead</p>
     </div>
-    
+
     <div class="content">
         <div class="paragraph">
             <button onclick="addParagraph($(this).parent())">add paragraph</button>
