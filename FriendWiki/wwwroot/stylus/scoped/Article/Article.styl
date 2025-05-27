@@ -1,4 +1,4 @@
-@import "../../styl/functions.styl
+@import "../../styl/functions.styl"
 
 .article {
   flex: 1;
@@ -11,9 +11,7 @@
     
     margin: 10px;
     padding: 10px;
-    min-width: 300px;
-    width: max-content;
-    max-width: 375px;
+    width: 325px;
     
     background-color: var(--text-100);
     
@@ -53,6 +51,15 @@
         
         .i-alt {
           margin: 5px 10px;
+        }
+        
+        button {
+          button(95%, auto, var(--primary-400));
+          
+          transition: background-color 0.5s;
+        }
+        button:hover {
+          background-color: var(--primary-500);
         }
       }
     }
