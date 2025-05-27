@@ -1,0 +1,65 @@
+@import "../../styl/functions.styl
+
+.article {
+  flex: 1;
+  display: flex;
+  flex-direction: row-reverse;
+  
+  .summary-wrapper {
+    display: flex;
+    flex-direction: column;
+    
+    margin: 10px;
+    padding: 10px;
+    min-width: 300px;
+    width: max-content;
+    max-width: 375px;
+    
+    background-color: var(--text-100);
+    
+    .s-title {
+      margin: 0;
+      padding: 7px;
+      
+      background-color: var(--text-300);
+      border-radius: 3px;
+    }
+    
+    .summary-image {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      
+      margin: 10px;
+      
+      .i-add {
+        width: 95%;
+        margin: 5px;
+        
+        text-align: center;
+        line-height: 200px;
+        border-radius: 3px;
+        
+        background-color: var(--primary-200);
+        cursor: pointer;
+      }
+      
+      .image-alt {
+        width: 95%;
+        margin: 5px;
+        
+        background-color: var(--text-200);
+        border-radius: 3px;
+        
+        .i-alt {
+          margin: 5px 10px;
+        }
+      }
+    }
+  }
+  
+  .article-wrapper {
+    flex: 1;
+  }
+  
+}
