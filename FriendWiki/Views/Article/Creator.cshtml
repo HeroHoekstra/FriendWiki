@@ -5,14 +5,18 @@
 <div>
     <div class="summary-wrapper">
         <div class="summary">
-            <h2>Summary title</h2>
+            <h2 class="s-title" contenteditable>Summary title</h2>
             <div class="summary-image">
                 <span class="material-symbols-rounded s-i-add s-i-add-preview">add</span>
                 <img src="" alt="Your image description" class="i-add" style="display:none;" />
                 <p contenteditable>Your image description</p>
             </div>
             
-            <div class="summary-content"></div>
+            <div class="summary-content">
+                <div class="summary-row">
+                    <button onclick="addSummaryRow($(this).parent())">Add row</button>
+                </div>
+            </div>
         </div>
     </div>
     
@@ -49,6 +53,16 @@
             <p class="i-alt" contenteditable>Your image description</p>
             <button onclick="removeImage($(this).parent().parent())">remove image</button>
         </div>
+    </div>
+</div>
+
+<div id="summary-row-template" hidden>
+    <div class="summary-row">
+        <h3 class="s-row-title" contenteditable>Summary row</h3>
+        <p class="s-row-content" contenteditable>Summary row content</p>
+        
+        <button onclick="removeSummaryRow($(this).parent())">Remove row</button>
+        <button onclick="addSummaryRow($(this).parent())">Add row</button>
     </div>
 </div>
 
