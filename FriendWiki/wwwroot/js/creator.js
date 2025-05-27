@@ -21,6 +21,9 @@ $(document).ready(function () {
     $(".s-title").on("focusout", function() {
         data.summary.title = $(this).text(); 
     });
+    
+    // And set summary image
+    $(".summary-image > .i-add").on("click", () => setImage($(this), true));
 });
 
 function setPositions() {
@@ -121,7 +124,7 @@ function removeParagraph(paragraph) {
 
 
 // Images
-function setImage(node) {
+function setImage(node, isSummary = false) {
     const link = prompt("Insert image URL");
     if (link === null) {
         return;
@@ -144,21 +147,34 @@ function setImage(node) {
     // Make sure 'alt's are matched
     $(".i-alt", altWrapper).on('focusout', function() {
         img.attr("alt", $(this).text());
-        data.paragraphs[paragraphPosition].image[imagePosition].alt = $.trim($(this).text());
+        const trimmed = $.trim($(this).text());
+        
+        if (!isSummary) {
+            data.paragraphs[paragraphPosition].image[imagePosition].alt = trimmed;
+        } else {
+            data.summary.image.alt = trimmed;  
+        }
     });
     
     // Add new "add image" button
     const parent = node.parent().parent();
-    if (node.data("preview") === true) {
+    if (node.data("preview") === true && !isSummary) {
         node.data("preview", false);
         addImageSelection(parent);
     }
     
     // Finally add to 'data'
-    data.paragraphs[paragraphPosition].image[imagePosition] = {
-        src: link,
-        alt: "Your image description"
-    };
+    if (!isSummary) {
+        data.paragraphs[paragraphPosition].image[imagePosition] = {
+            src: link,
+            alt: "Your image description"
+        };
+    } else {
+        data.summary.image = {
+            src: link,
+            alt: "Your image description"
+        }   
+    }
 }
 
 function addImageSelection(paragraph) {
