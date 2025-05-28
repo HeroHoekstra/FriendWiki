@@ -1,0 +1,45 @@
+@import "../../styl/functions.styl"
+
+.home {
+  flex: 1;
+  
+  .home-header {
+    .search-form {
+      display: flex;
+      justify-content: center;
+      
+      .search-wrapper {
+        display: flex;
+        flex-direction: row;
+
+        width: 30vw;
+
+        * {
+          border: none;
+          padding: 5px 10px;
+
+          &:focus-visible {
+            outline: none;
+          }
+        }
+
+        .search-input {
+          borderRadiusLeft(5px);
+          width: 100%;
+          background-color: var(--background-100);
+        }
+
+        .search-submit {
+          borderRadiusRight(5px);
+          background-color: var(--background-200);
+
+          transition: background-color 0.35s;
+
+          &:hover {
+            background-color: var(--background-300);
+          }
+        }
+      }
+    }
+  }
+}

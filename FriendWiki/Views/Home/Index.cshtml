@@ -2,7 +2,32 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="home">
+    <div class="home-header">
+        <img class="logo" src="~/img/logo-light.svg" alt="FriendWiki logo. A simple 'FW' in serif font"/>
+        <form class="search-form" method="get">
+                <div class="search-wrapper">
+                    <input class="search-input" type="text" placeholder="Search articles"/>
+                    <button class="material-symbols-rounded search-submit">search</button>
+                </div>
+        </form>
+    </div>
+    
+    <div class="suggestions">
+        Don't know where to start?
+        <a asp-controller="Article" asp-action="Random">Find a random article</a>
+        <a asp-controller="Article" asp-action="Creator">Create an article</a>
+    </div>
 </div>
+
+<script>
+    const logo = $(".logo");
+    const logoDark = "@Url.Content("~/img/logo-dark.svg")";
+    const logoLight = "@Url.Content("~/img/logo-light.svg")";
+    
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        logo.attr("src", logoDark);
+    } else {
+        logo.attr("src", logoLight);
+    }
+</script>
