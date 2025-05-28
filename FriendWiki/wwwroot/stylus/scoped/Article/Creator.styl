@@ -1,7 +1,40 @@
 @import "Article.styl"
 
-.remove-summary-image {
-  button(95%, 16px, var(--secondary-600));
+[contenteditable]:focus-visible {
+  outline: none;
+}
+  
+button {
   margin: 5px;
   padding: 5px;
+}
+
+.summary {    
+  .button-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    
+    button {
+      flex: 1;
+    }
+  }
+}
+  
+
+.paragraph {
+  .button-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    
+    width: 100%;
+  }
+}
+  
+.add-button {
+  button(auto, auto, var(--primary-300), var(--text-400));
+}
+.remove-button {
+  button(auto, auto, var(--primary-400), var(--text-500));
 }

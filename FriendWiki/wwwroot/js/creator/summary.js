@@ -1,6 +1,6 @@
 function addSummaryRow(caller) {
     const html = $("#summary-row-template").html();
-    const row = $(html);
+    const row = $(html).clone(true);
 
     caller.after(row);
     

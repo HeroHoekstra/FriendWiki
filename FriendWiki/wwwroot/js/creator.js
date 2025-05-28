@@ -11,6 +11,7 @@ let data = {
 $(document).ready(function () {
     // Set title and lead listener
     $(".title").on("focusout", function() { // "focusout" is used, because "change" only works on input fields and not regular elements
+        $("title").text(`${$(this).text()} - FriendWiki`);
         data.title = $(this).text(); 
     });
     $(".lead").on("focusout", function() {
@@ -23,7 +24,9 @@ $(document).ready(function () {
     });
     
     // And set summary image
-    $(".summary-image > .i-add").on("click", () => setImage($(this), true));
+    $(".summary-image > .i-add").on("click", function() { 
+        setImage($(this).parent(), true)
+    });
 });
 
 function setPositions() {

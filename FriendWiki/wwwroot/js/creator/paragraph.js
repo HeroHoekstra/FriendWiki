@@ -15,7 +15,7 @@ function editableParagraph(node) {
 
 function addParagraph(caller) {
     const html = $("#paragraph-template").html();
-    const paragraph = $(html);
+    const paragraph = $(html).clone(true);
 
     caller.after(paragraph);
 

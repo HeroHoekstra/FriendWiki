@@ -12,10 +12,10 @@ function setImage(node, isSummary = false) {
     img.show();
 
     const altWrapper = $(".image-alt", node)
-    altWrapper.show();
+    altWrapper.show();  
 
     // Get positions
-    const paragraphPosition = node.parent().parent().data("position");
+    const paragraphPosition = node.closest('.paragraph').data("position");
     const imagePosition = node.data("position");
 
     // Make sure 'alt's are matched
@@ -39,6 +39,7 @@ function setImage(node, isSummary = false) {
 
     // Finally add to 'data'
     if (!isSummary) {
+        hasImagePosition(paragraphPosition, imagePosition);
         data.paragraphs[paragraphPosition].image[imagePosition] = {
             src: link,
             alt: "Your image description"
@@ -49,11 +50,11 @@ function setImage(node, isSummary = false) {
             alt: "Your image description"
         }
     }
-}
+}   
 
 function addImageSelection(paragraph) {
     const html = $("#image-template").html();
-    const image = $(html);
+    const image = $(html).clone(true);
 
     $(".images", paragraph).append(image);
     $(".i-add", image).on("click", () => setImage(image));
@@ -63,7 +64,7 @@ function addImageSelection(paragraph) {
 
 function removeImage(image) {
     if (confirm("Are you sure you want to delete this image?")) {
-        const paragraphPosition = image.parent().parent().data("position");
+        const paragraphPosition = image.closest('.paragraph').data("position");
         const imagePosition = image.data("position");
 
         delete data.paragraphs[paragraphPosition].image[imagePosition];

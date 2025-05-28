@@ -1,4 +1,4 @@
-button(width, height, color) {
+button(width, height, color, hoverColor) {
   width: width;
   height: height;
   
@@ -7,4 +7,17 @@ button(width, height, color) {
   border-radius: 3px;
   font-weight: bold;
   cursor: pointer;
+  
+  transition: background-color 0.35s;
+  
+  &:hover {
+    background-color: hoverColor; 
+  }
+}
+  
+breakLine(width, margin, color) {
+  width: width;
+  margin: margin;
+  
+  border-top: 1px solid color;
 }

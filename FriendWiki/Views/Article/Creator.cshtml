@@ -6,33 +6,40 @@
     <div class="summary-wrapper">
         <div class="summary">
             <h2 class="s-title" contenteditable>Summary title</h2>
-            <div class="summary-image">
+            <div class="summary-image image">
                 <span class="material-symbols-rounded i-add i-add-preview">add</span>
                 <img src="" alt="Your image description" class="i-add" style="display:none;" />
 
                 <div class="image-alt" style="display:none;">
                     <p class="i-alt" contenteditable>Your image description</p>
-                    <button class="remove-summary-image" onclick="removeSummaryImage()">remove image</button>
+                    <button class="remove-button" onclick="removeSummaryImage()">remove image</button>
                 </div>
             </div>
             
+            <div class="break-line"></div>
+            
             <div class="summary-content">
                 <div class="summary-row prime-add">
-                    <button onclick="addSummaryRow($(this).parent())">Add row</button>
+                    <div class="button-wrapper">
+                        <button class="add-button" onclick="addSummaryRow($(this).closest('.summary-row'))">Add row</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     
     <div class="article-wrapper">
-        <div>
+        <div class="title-wrapper">
             <h1 class="title" contenteditable>Title</h1>
+            <div class="break-line"></div>
             <p class="lead" contenteditable>Lead</p>
         </div>
 
         <div class="content">
             <div class="paragraph prime-add">
-                <button onclick="addParagraph($(this).parent())">add paragraph</button>
+                <div class="button-wrapper">
+                    <button class="add-button" onclick="addParagraph($(this).closest('.paragraph'))">Add paragraph</button>
+                </div>
             </div>
         </div>
     </div>
@@ -41,12 +48,17 @@
 <div id="paragraph-template" hidden>
     <div class="paragraph template">
         <h2 class="p-title paragraph-item" contenteditable>Paragraph Title</h2>
-        <p class="p-body paragraph-item" contenteditable>Paragraph body</p>
+        <div class="break-line"></div>
         
-        <div class="images"></div>
+        <div class="paragraph-content">
+            <p class="p-body paragraph-item" contenteditable>Paragraph body</p>
+            <div class="images"></div>    
+        </div>
         
-        <button onclick="addParagraph($(this).parent())">add paragraph</button>
-        <button onclick="removeParagraph($(this).parent())">remove paragraph</button>
+        <div class="button-wrapper">
+            <button class="add-button" onclick="addParagraph($(this).closest('.paragraph'))">Add paragraph</button>
+            <button class="remove-button" onclick="removeParagraph($(this).closest('.paragraph'))">Remove paragraph</button>
+        </div>
     </div>
 </div>
 
@@ -57,18 +69,22 @@
         
         <div class="image-alt" style="display:none;">
             <p class="i-alt" contenteditable>Your image description</p>
-            <button onclick="removeImage($(this).parent().parent())">remove image</button>
+            <button class="remove-button" onclick="removeImage($(this).parent().parent())">remove image</button>
         </div>
     </div>
 </div>
 
 <div id="summary-row-template" hidden>
     <div class="summary-row template">
+        <div class="break-line"></div>
+        
         <h3 class="s-row-title summary-row-item" contenteditable>Summary row</h3>
         <p class="s-row-content summary-row-item" contenteditable>Summary row content</p>
-        
-        <button onclick="removeSummaryRow($(this).parent())">Remove row</button>
-        <button onclick="addSummaryRow($(this).parent())">Add row</button>
+
+        <div class="button-wrapper">
+            <button class="add-button" onclick="addSummaryRow($(this).closest('.summary-row'))">Add row</button>
+            <button class="remove-button" onclick="removeSummaryRow($(this).closest('.summary-row'))">Remove row</button>
+        </div>
     </div>
 </div>
 
