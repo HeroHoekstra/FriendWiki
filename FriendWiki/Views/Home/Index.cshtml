@@ -4,30 +4,31 @@
 
 <div class="home">
     <div class="home-header">
-        <img class="logo" src="~/img/logo-light.svg" alt="FriendWiki logo. A simple 'FW' in serif font"/>
-        <form class="search-form" method="get">
+        <img class="logo" src="@Url.Content("~/img/logo-light.svg")" alt="FriendWiki logo. A simple 'FW' in serif font"/>
+        <div class="quote">A wiki - for regular people and events</div>
+        <form class="search-form" asp-controller="Article" asp-action="Search" method="get">
                 <div class="search-wrapper">
-                    <input class="search-input" type="text" placeholder="Search articles"/>
+                    <input class="search-input" type="text" name="query" placeholder="Search articles"/>
                     <button class="material-symbols-rounded search-submit">search</button>
                 </div>
         </form>
     </div>
     
     <div class="suggestions">
-        Don't know where to start?
-        <a asp-controller="Article" asp-action="Random">Find a random article</a>
-        <a asp-controller="Article" asp-action="Creator">Create an article</a>
+        <h2>Don't know where to start?</h2>
+        <ul>
+            <li><a asp-controller="Article" asp-action="Random">Find a random article</a></li>
+            <li><a asp-controller="Article" asp-action="Creator">Create an article</a></li>
+        </ul>
     </div>
 </div>
 
 <script>
     const logo = $(".logo");
-    const logoDark = "@Url.Content("~/img/logo-dark.svg")";
-    const logoLight = "@Url.Content("~/img/logo-light.svg")";
     
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-        logo.attr("src", logoDark);
+        logo.attr("src", @Url.Content("~/img/logo-dark.svg"));
     } else {
-        logo.attr("src", logoLight);
+        logo.attr("src", @Url.Content("~/img/logo-light.svg"));
     }
 </script>

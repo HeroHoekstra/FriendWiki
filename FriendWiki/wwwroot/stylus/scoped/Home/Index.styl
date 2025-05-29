@@ -2,11 +2,29 @@
 
 .home {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   
   .home-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    width: 30vw;
+    
+    .logo {
+      width: 50%;
+    }
+    
+    .quote {
+      margin: 6px;
+    }
+    
     .search-form {
       display: flex;
       justify-content: center;
+      margin: 10px;
       
       .search-wrapper {
         display: flex;
@@ -42,4 +60,20 @@
       }
     }
   }
+  
+  .suggestions {
+    display: flex;
+    flex-direction: column;
+    
+    h2 {
+      margin: 10px 0 0 0;
+    }
+    
+    ul {
+      margin: 0;
+      padding-left: 20px; 
+      list-style: none;
+    }
+  }
+  
 }
