@@ -44,9 +44,10 @@ function updateParagraphData() {
             return;
         }
 
-        hasParagraphPosition(i);
-        data.paragraphs[i].title = $(".p-title", e).text();
-        data.paragraphs[i].body = $(".p-body", e).text();
+        // Use `i-1` because 0 is prime-add
+        hasParagraphPosition(i-1);
+        data.paragraphs[i-1].title = $(".p-title", e).text();
+        data.paragraphs[i-1].body = $(".p-body", e).text();
     });
 }
 
@@ -55,7 +56,7 @@ function hasParagraphPosition(position) {
         data.paragraphs[position] = {
             title: "Paragraph Title",
             body: "Paragraph body",
-            image: {}
+            images: []
         };
     }
 }

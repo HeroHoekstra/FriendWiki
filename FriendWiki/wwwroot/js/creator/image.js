@@ -24,7 +24,7 @@ function setImage(node, isSummary = false) {
         const trimmed = $.trim($(this).text());
 
         if (!isSummary) {
-            data.paragraphs[paragraphPosition].image[imagePosition].alt = trimmed;
+            data.paragraphs[paragraphPosition].images[imagePosition].alt = trimmed;
         } else {
             data.summary.image.alt = trimmed;
         }
@@ -40,14 +40,14 @@ function setImage(node, isSummary = false) {
     // Finally add to 'data'
     if (!isSummary) {
         hasImagePosition(paragraphPosition, imagePosition);
-        data.paragraphs[paragraphPosition].image[imagePosition] = {
-            src: link,
-            alt: "Your image description"
+        data.paragraphs[paragraphPosition].images[imagePosition] = {
+            source: link,
+            alternative: "Your image description"
         };
     } else {
         data.summary.image = {
-            src: link,
-            alt: "Your image description"
+            source: link,
+            alternative: "Your image description"
         }
     }
 }   
@@ -67,16 +67,16 @@ function removeImage(image) {
         const paragraphPosition = image.closest('.paragraph').data("position");
         const imagePosition = image.data("position");
 
-        delete data.paragraphs[paragraphPosition].image[imagePosition];
+        delete data.paragraphs[paragraphPosition].images[imagePosition];
         image.remove();
     }
 }
 
 function hasImagePosition(paragraphPosition, imagePosition) {
-    if (!data.paragraphs[paragraphPosition].image[imagePosition]) {
-        data.paragraphs[paragraphPosition].image[imagePosition] = {
-            src: "",
-            alt: "Your image description"
+    if (!data.paragraphs[paragraphPosition].images[imagePosition]) {
+        data.paragraphs[paragraphPosition].images[imagePosition] = {
+            source: "",
+            alternative: "Your image description"
         };
     }
 }

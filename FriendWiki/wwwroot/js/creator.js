@@ -1,10 +1,14 @@
 let data = {
     title: "Title",
     lead: "Lead",
-    paragraphs: {},
+    paragraphs: [],
     summary: {
         title: "Summary title",
-        rows: {}
+        image: {
+            source: "",
+            alternative: ""
+        },
+        rows: [],
     }
 };
 
@@ -31,14 +35,41 @@ $(document).ready(function () {
 
 function setPositions() {
     $(".paragraph").each(function(i, e) {
-        $(e).attr("data-position", i);
+        if (!$(e).hasClass("prime-add"))
+            $(e).attr("data-position", i - 1);
     });
 
     $(".summary-row").each(function(i, e) {
-        $(e).attr("data-position", i);
+        if (!$(e).hasClass("prime-add"))
+            $(e).attr("data-position", i - 1);
     });
     
-    $(".image").each(function(i, e) {
-        $(e).attr("data-position", i); 
+    $(".images").each(function(i, e) {
+        $(".image", $(e)).each(function(i, e) {
+            $(e).attr("data-position", i);
+        });
     });
+}
+
+async function submitArticle() {
+    try {
+        const json = JSON.stringify(data);
+        
+        const response = await fetch("/article/creator", {
+            method: "POST",
+            body: json,
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        
+        if (!response.ok) {
+            throw Error(response.statusText);
+        }
+        
+        window.location.href = "/";
+    } catch (error) {
+        console.error(`An error occurred: ${error}`);
+    }
+    
 }

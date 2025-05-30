@@ -51,9 +51,10 @@ function updateSummaryData() {
             return;
         } 
         
-        hasSummaryPosition(i);
-        data.summary.rows[i].title = $(".s-row-title", e).text();
-        data.summary.rows[i].content = $(".s-row-content", e).text();
+        // Use `i-1` because 0 is prime-add
+        hasSummaryPosition(i-1);
+        data.summary.rows[i-1].title = $(".s-row-title", e).text();
+        data.summary.rows[i-1].content = $(".s-row-content", e).text();
     });
 }
 

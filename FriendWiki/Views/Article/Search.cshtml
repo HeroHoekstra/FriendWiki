@@ -1,0 +1,19 @@
+@{
+    IEnumerable<Article>? articles = ViewData["Articles"] as IEnumerable<Article>;
+}
+
+@if (articles == null)
+{
+    <p>No article was found with the name @ViewData["Title"]</p>
+}
+else
+{
+    <div>
+        <ul>
+            @foreach (Article article in articles.ToList())
+            {
+                <li>@article.Title</li>
+            }
+        </ul>
+    </div>
+}
