@@ -17,6 +17,19 @@ public class ArticleController : Controller
         _logger = logger;
         _articleRepo = articleRepo;
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Article([FromRoute] string id)
+    {
+        Article? article = await _articleRepo.GetById((long)Convert.ToDouble(id));
+
+        if (article == null)
+        {
+            return NotFound();
+        }
+        
+        return View(article);
+    }
     
 
     [HttpGet("search")]
@@ -42,30 +55,6 @@ public class ArticleController : Controller
         {
             return BadRequest();
         }
-        
-        /*Console.WriteLine(article.Title);
-        Console.WriteLine(article.Lead);
-
-        foreach (var item in article.Paragraphs)
-        {
-            Console.WriteLine(item.Title);
-            Console.WriteLine(item.Body);
-            foreach (var iitem in item.Images)
-            {
-                Console.WriteLine(iitem.Source);
-                Console.WriteLine(iitem.Alternative);
-            }
-        }
-
-        Console.WriteLine(article.Summary.Title);
-        Console.WriteLine(article.Summary.Image.Source);
-        Console.WriteLine(article.Summary.Image.Alternative);
-
-        foreach (var item in article.Summary.Rows)
-        {
-            Console.WriteLine(item.Title);
-            Console.WriteLine(item.Content);
-        }*/
         
         // While `article` is technically correct, images are missing Ids
         // Add Paragraph to Paragraphs's Images

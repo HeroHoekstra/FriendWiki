@@ -11,6 +11,17 @@ public class ArticleRepository : Repository<Article>, IArticleRepository
     {
     }
 
+    public new async Task<Article?> GetById(long id)
+    {
+        return await _dbSet
+            .Where(a => a.Id == id)
+            .Include(a => a.Summary)
+                .ThenInclude(s => s.Image)
+            .Include(a => a.Paragraphs)
+                .ThenInclude(p => p.Images)
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<IEnumerable<Article>> GetByTitlePaginated(string title, int page, int pageSize)
     {
         return await _dbSet

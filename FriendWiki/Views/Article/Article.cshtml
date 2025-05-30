@@ -1,0 +1,80 @@
+@model Article
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="article">
+    <div class="summary-wrapper">
+        <div class="summary">
+            <h2 class="s-title">@Model.Summary.Title</h2>
+            
+            @if (Model.Summary.Image != null)
+            {
+                <div class="summary-image image">
+                    <img src="@Model.Summary.Image.Source" alt="@Model.Summary.Image.Alternative" class="i-add" />
+
+                    <div class="image-alt">
+                        <p class="i-alt">@Model.Summary.Image.Alternative</p>
+                    </div>
+                </div>
+            }
+            
+            <div class="summary-content">
+                @foreach (SummaryRow summaryRow in Model.Summary.Rows)
+                {
+                    <div class="summary-row">
+                        <div class="break-line"></div>
+                        <h3 class="s-row-title summary-row-item">@summaryRow.Title</h3>
+                        <p class="s-row-content summary-row-item">@summaryRow.Content</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    
+    <div class="article-wrapper">
+        <div class="title-wrapper">
+            <h1 class="title">@Model.Title</h1>
+            <div class="break-line"></div>
+            <p class="lead">@Model.Lead</p>
+        </div>
+
+        <div class="content">
+            @foreach (Paragraph paragraph in Model.Paragraphs)
+            {
+                <div class="paragraph">
+                    <h2 class="p-title paragraph-item">@paragraph.Title</h2>
+                    <div class="break-line"></div>
+        
+                    <div class="paragraph-content">
+                        <p class="p-body paragraph-item">@paragraph.Body</p>
+                        <div class="images">
+                            @foreach (Image image in paragraph.Images)
+                            {
+                                <div class="image">
+                                    <img src="@image.Source" alt="@image.Alternative" class="i-add"/>
+        
+                                    <div class="image-alt">
+                                        <p class="i-alt">@image.Alternative</p>
+                                    </div>
+                                </div>
+                            }
+                        </div>    
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div id="paragraph-template" hidden>
+    
+</div>
+
+<div id="image-template" hidden>
+
+</div>
+
+<div id="summary-row-template" hidden>
+
+</div>
