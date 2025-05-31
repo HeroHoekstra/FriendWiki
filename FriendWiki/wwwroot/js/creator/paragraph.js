@@ -8,7 +8,7 @@ function editableParagraph(node) {
         if ($this.hasClass("p-title")) {
             data.paragraphs[position].title = $this.text();
         } else if ($this.hasClass("p-body")) {
-            data.paragraphs[position].body = $this.text();
+            data.paragraphs[position].body = withWhitespace($this.html());
         }
     });
 }
@@ -47,7 +47,7 @@ function updateParagraphData() {
         // Use `i-1` because 0 is prime-add
         hasParagraphPosition(i-1);
         data.paragraphs[i-1].title = $(".p-title", e).text();
-        data.paragraphs[i-1].body = $(".p-body", e).text();
+        data.paragraphs[i-1].body = withWhitespace($(".p-body", e).html());
     });
 }
 

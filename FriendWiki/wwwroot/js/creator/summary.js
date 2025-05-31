@@ -21,7 +21,7 @@ function editableSummaryRow(node) {
         if ($this.hasClass("s-row-title")) {
             data.summary.rows[position].title = $this.text();
         } else if ($this.hasClass("s-row-content")) {
-            data.summary.rows[position].content = $this.text();
+            data.summary.rows[position].content = withWhitespace($this.html());
         }
     });
 }
@@ -54,7 +54,7 @@ function updateSummaryData() {
         // Use `i-1` because 0 is prime-add
         hasSummaryPosition(i-1);
         data.summary.rows[i-1].title = $(".s-row-title", e).text();
-        data.summary.rows[i-1].content = $(".s-row-content", e).text();
+        data.summary.rows[i-1].content = withWhitespace($(".s-row-content", e).html());
     });
 }
 

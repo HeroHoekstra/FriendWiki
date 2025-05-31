@@ -1,4 +1,3 @@
-using System.Text.Json;
 using FriendWiki.Models;
 using FriendWiki.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -55,7 +54,7 @@ public class ArticleController : Controller
         {
             return BadRequest();
         }
-        
+
         // While `article` is technically correct, images are missing Ids
         // Add Paragraph to Paragraphs's Images
         foreach (var paragraph in article.Paragraphs)
@@ -67,7 +66,6 @@ public class ArticleController : Controller
             }
         }
         
-        // And add SummaryId to the Summary's Image
         Image? summaryImage = article.Summary.Image;
         if (summaryImage != null)
         {
@@ -77,9 +75,11 @@ public class ArticleController : Controller
             summaryImage.SummaryId = article.SummaryId;
         }
         
+        article.Sanitize();
+        
         await _articleRepo.Create(article);
         await _articleRepo.Save();
         
-        return View("Article");
+        return Json(new { id = article.Id });
     }
 }

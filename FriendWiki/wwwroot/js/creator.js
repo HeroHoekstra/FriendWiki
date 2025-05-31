@@ -4,10 +4,6 @@ let data = {
     paragraphs: [],
     summary: {
         title: "Summary title",
-        image: {
-            source: "",
-            alternative: ""
-        },
         rows: [],
     }
 };
@@ -32,6 +28,10 @@ $(document).ready(function () {
         setImage($(this).parent(), true)
     });
 });
+
+function withWhitespace(html) {
+    return html.replace(/<br\*s\/?>/g, '\n');
+}
 
 function setPositions() {
     $(".paragraph").each(function(i, e) {
@@ -67,7 +67,8 @@ async function submitArticle() {
             throw Error(response.statusText);
         }
         
-        window.location.href = "/";
+        const result = await response.json();
+        window.location.href = `/article/${result.id}`;
     } catch (error) {
         console.error(`An error occurred: ${error}`);
     }

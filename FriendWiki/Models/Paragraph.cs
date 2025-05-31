@@ -1,3 +1,5 @@
+using Ganss.Xss;
+
 namespace FriendWiki.Models;
 
 public class Paragraph : IModel
