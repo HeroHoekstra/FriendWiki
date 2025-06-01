@@ -5,6 +5,8 @@ namespace FriendWiki.Repository.Interface;
 public interface IArticleRepository : IRepository<Article>
 {
     new Task<Article?> GetById(long id);
+
+    Task<long> GetRandomId();
     
-    Task<IEnumerable<Article>> GetByTitlePaginated(string title, int page, int pageSize);
+    Task<(IEnumerable<Article>, int totalCount)> GetByTitlePaginated(string title, int page, int pageSize);
 }

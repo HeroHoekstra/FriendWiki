@@ -18,6 +18,69 @@ main {
   height: max-content;
 }
 
+  
+nav {
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  padding: 0 20px;
+  
+  .default-nav {
+    flex: 1;
+    
+    display: flex;
+    flex-direction: row;
+    height: inherit;
+    gap: 30%;
+    
+    a {
+      height: inherit;
+      .icon {
+        height: inherit;
+      }
+    }
+  }
+}
+  
+.search-form {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+
+  .search-wrapper {
+    display: flex;
+    flex-direction: row;
+
+    width: 30vw;
+
+    * {
+      border: none;
+      padding: 5px 10px;
+
+      &:focus-visible {
+        outline: none;
+      }
+    }
+
+    .search-input {
+      borderRadiusLeft(5px);
+      width: 100%;
+      background-color: var(--background-100);
+    }
+
+    .search-submit {
+      borderRadiusRight(5px);
+      background-color: var(--background-200);
+
+      transition: background-color 0.35s;
+
+      &:hover {
+        background-color: var(--background-300);
+      }
+    }
+  }
+}
+  
 h1, h2, h3, h4, h5 {
   font-family: serif;
 }

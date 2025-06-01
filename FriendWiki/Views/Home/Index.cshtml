@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    ViewData["NoNav"] = true;
 }
 
 <div class="home">
@@ -27,8 +28,8 @@
     const logo = $(".logo");
     
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-        logo.attr("src", @Url.Content("~/img/logo-dark.svg"));
+        logo.attr("src", "@Url.Content("~/img/logo-dark.svg")");
     } else {
-        logo.attr("src", @Url.Content("~/img/logo-light.svg"));
+        logo.attr("src", "@Url.Content("~/img/logo-light.svg")");
     }
 </script>

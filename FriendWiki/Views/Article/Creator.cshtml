@@ -1,5 +1,6 @@
 @{
     ViewData["Title"] = "Creator";
+    string? articleJson = ViewData["ArticleJson"] as string;
 }
 
 <div class="article">
@@ -94,3 +95,7 @@
 <script src="~/js/creator/paragraph.js"></script>
 <script src="~/js/creator/summary.js"></script>
 <script src="~/js/creator.js"></script>
+@if (articleJson != null)
+{
+    <script>fillFields(@Html.Raw(articleJson.Replace("\\u003Ca", "\\\"")));</script>
+}

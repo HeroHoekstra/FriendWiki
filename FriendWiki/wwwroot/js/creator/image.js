@@ -1,5 +1,4 @@
-function setImage(node, isSummary = false) {
-    const link = prompt("Insert image URL");
+function setImage(node, isSummary = false, link = prompt("Insert image URL")) {
     if (link === null) {
         return;
     }

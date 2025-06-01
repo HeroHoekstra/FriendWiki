@@ -9,6 +9,8 @@ function addSummaryRow(caller) {
     setPositions();
     editableSummaryRow(row);
     updateSummaryData();
+    
+    return row;
 }
 
 function editableSummaryRow(node) {

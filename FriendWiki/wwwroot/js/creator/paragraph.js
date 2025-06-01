@@ -25,6 +25,8 @@ function addParagraph(caller) {
     editableParagraph(paragraph);
     addImageSelection(paragraph);
     updateParagraphData();
+    
+    return paragraph;
 }
 
 function removeParagraph(paragraph) {

@@ -1,19 +1,60 @@
 @{
-    IEnumerable<Article>? articles = ViewData["Articles"] as IEnumerable<Article>;
+    List<Article>? articles = ViewData["Articles"] as List<Article>;
+    int? totalCount = ViewData["TotalCount"] as int?;
+    int? pageSize = ViewData["PageSize"] as int?;
 }
 
-@if (articles == null)
+@section NavComponent
 {
-    <p>No article was found with the name @ViewData["Title"]</p>
+    <div class="search-nav">
+        @totalCount articles found
+    </div>
 }
-else
+
+@if (articles != null)
 {
-    <div>
-        <ul>
-            @foreach (Article article in articles.ToList())
+    <div class="search">    
+        <ul class="article-list">
+            @foreach (Article article in articles)
             {
-                <li>@article.Title</li>
+                <li class="article-item">
+                    <a class="link" href="/article/@article.Id">
+                        <div class="preview-image-wrapper">
+                            @if (article.Summary.Image == null)
+                            {
+                                <span class="material-symbols-rounded preview-image">description</span>
+                            }
+                            else
+                            {
+                                <img class="preview-image" src="@article.Summary.Image.Source" alt="@article.Summary.Image.Alternative"/>
+                            }
+                        </div>
+
+                        <div class="article-summary">
+                            <h1 class="title">@article.Title</h1>
+                            <p class="summary">
+                                @{
+                                    var leadString = article.Lead.Length < 255 ? article.Lead : $"{article.Lead.Substring(0, 255)}...";
+                                }
+                                @leadString
+                            </p>
+                        </div>
+
+                    </a>
+
+                    <div class="break-line"></div>
+                </li>
             }
         </ul>
+
+        @if (totalCount > pageSize)
+        {
+            <div class="pagination">
+                @for (int i = 0; i <= (int)Math.Ceiling((double)(totalCount / pageSize)); i++)
+                {
+                    <a href="?query=@ViewData["Title"]&page=@(i + 1)">@(i + 1)</a>
+                }
+            </div>
+        }
     </div>
 }

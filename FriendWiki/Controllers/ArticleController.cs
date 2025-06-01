@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using FriendWiki.Models;
 using FriendWiki.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +18,8 @@ public class ArticleController : Controller
         _logger = logger;
         _articleRepo = articleRepo;
     }
+    
+    #region Viewing 
 
     [HttpGet("{id}")]
     public async Task<IActionResult> Article([FromRoute] string id)
@@ -30,23 +34,58 @@ public class ArticleController : Controller
         return View(article);
     }
     
-
     [HttpGet("search")]
-    public async Task<IActionResult> Search(string query, int page = 1)
+    public async Task<IActionResult> Search([FromQuery] string query, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
     {
-        ViewData["Articles"] = await _articleRepo.GetByTitlePaginated(query, page, 15);
+        var (articles, totalCount) = await _articleRepo.GetByTitlePaginated(query, page, pageSize);
+
+        ViewData["Articles"] = articles;
+        ViewData["TotalCount"] = totalCount;
+        ViewData["PageSize"] = pageSize;
         ViewData["Title"] = query;
         
         return View("Search");
     }
+
+    [HttpGet("random")]
+    public async Task<IActionResult> Random()
+    {
+        long id = await _articleRepo.GetRandomId();
+
+        return RedirectToAction("Article", "Article", new { id });
+    }
     
+    #endregion
+    
+    #region Creating
     
     [HttpGet("creator")]
-    public IActionResult Creator()
+    public async Task<IActionResult> Creator([FromQuery] string id = "-1")
     {
-        return View("Creator");
+        long convertedId = (long)Convert.ToDouble(id);
+        
+        Article? article;
+        if (convertedId != -1)
+        {
+            article = await _articleRepo.GetById(convertedId);
+            if (article == null)
+            {
+                return NotFound();
+            }
+            
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                WriteIndented = false
+            };
+            string articleJson = JsonSerializer.Serialize(article, options);
+            string escapedJson = articleJson.Replace("'", "\\'");
+            ViewData["ArticleJson"] = escapedJson;
+        }
+        
+        return View();
     }
-
+    
     [HttpPost("creator")]
     public async Task<IActionResult> Creator([FromBody] Article? article)
     {
@@ -82,4 +121,6 @@ public class ArticleController : Controller
         
         return Json(new { id = article.Id });
     }
+
+    #endregion
 }
