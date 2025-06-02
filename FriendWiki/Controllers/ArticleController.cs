@@ -60,29 +60,8 @@ public class ArticleController : Controller
     #region Creating
     
     [HttpGet("creator")]
-    public async Task<IActionResult> Creator([FromQuery] string id = "-1")
+    public async Task<IActionResult> Creator()
     {
-        long convertedId = (long)Convert.ToDouble(id);
-        
-        Article? article;
-        if (convertedId != -1)
-        {
-            article = await _articleRepo.GetById(convertedId);
-            if (article == null)
-            {
-                return NotFound();
-            }
-            
-            var options = new JsonSerializerOptions
-            {
-                ReferenceHandler = ReferenceHandler.IgnoreCycles,
-                WriteIndented = false
-            };
-            string articleJson = JsonSerializer.Serialize(article, options);
-            string escapedJson = articleJson.Replace("'", "\\'");
-            ViewData["ArticleJson"] = escapedJson;
-        }
-        
         return View();
     }
     
@@ -122,5 +101,69 @@ public class ArticleController : Controller
         return Json(new { id = article.Id });
     }
 
+    #endregion
+    
+    #region Editing
+
+    [HttpGet("editor/{id}")]
+    public async Task<IActionResult> Editor([FromRoute] string id)
+    {
+        long convertedId = (long)Convert.ToDouble(id);
+        
+        Article? article;
+        article = await _articleRepo.GetById(convertedId);
+        if (article == null)
+        {
+            return NotFound();
+        }
+        
+        var options = new JsonSerializerOptions
+        {
+            ReferenceHandler = ReferenceHandler.IgnoreCycles,
+            WriteIndented = false
+        };
+        string articleJson = JsonSerializer.Serialize(article, options);
+        string escapedJson = articleJson.Replace("'", "\\'");
+        ViewData["ArticleJson"] = escapedJson;
+
+        return View("Creator");
+    }
+
+    [HttpPost("editor")]
+    public async Task<IActionResult> Editor([FromBody] Article? article)
+    {
+        if (article == null)
+        {
+            return BadRequest();
+        }
+        
+        // While `article` is technically correct, images are missing Ids
+        // Add Paragraph to Paragraphs's Images
+        foreach (var paragraph in article.Paragraphs)
+        {
+            foreach (var image in paragraph.Images)
+            {
+                image.Paragraph = paragraph;
+                image.ParagraphId = paragraph.Id;
+            }
+        }
+        
+        Image? summaryImage = article.Summary.Image;
+        if (summaryImage != null)
+        {
+            article.Summary.ImageId = summaryImage.Id;
+            
+            summaryImage.Summary = article.Summary;
+            summaryImage.SummaryId = article.SummaryId;
+        }
+        
+        article.Sanitize();
+        
+        _articleRepo.Update(article);
+        await _articleRepo.Save();
+        
+        return Json(new { id = article.Id });
+    }
+    
     #endregion
 }

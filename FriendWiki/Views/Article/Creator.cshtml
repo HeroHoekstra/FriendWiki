@@ -41,7 +41,7 @@
         <div class="content">
             <div class="paragraph prime-add">
                 <div class="button-wrapper">
-                    <button class="add-button" onclick="addParagraph($(this).closest('.paragraph'))">Add paragraph</button>
+                    <button class="add-button" onclick="addItem($(this).closest('.paragraph'), 'paragraph-template')">Add paragraph</button>
                 </div>
             </div>
         </div>
@@ -49,12 +49,12 @@
 </div>
 
 <div id="paragraph-template" hidden>
-    <div class="paragraph template">
-        <h2 class="p-title paragraph-item" contenteditable>Paragraph Title</h2>
+    <div class="paragraph template" data-editable="paragraphs.{pos}">
+        <h2 class="p-title paragraph-item" data-editable="paragraphs.{pos}.title" data-parent="paragraph" contenteditable>Paragraph Title</h2>
         <div class="break-line"></div>
         
         <div class="paragraph-content">
-            <p class="p-body paragraph-item" contenteditable>Paragraph body</p>
+            <p class="p-body paragraph-item" data-editable="paragraph.{pos}.body" data-parent="paragraph" contenteditable>Paragraph body</p>
             <div class="images"></div>    
         </div>
         
@@ -66,7 +66,7 @@
 </div>
 
 <div id="image-template" hidden>
-    <div class="image" data-preview="true">
+    <div class="image" data-editable="paragraphs.{pos}.images.{pos}" data-parent="paragraph" data-preview="true">
         <span class="material-symbols-rounded i-add i-add-preview">add</span>
         <img src="" alt="Your image description" class="i-add" style="display:none;" />
         
@@ -91,11 +91,14 @@
     </div>
 </div>
 
-<script src="~/js/creator/image.js"></script>
+<!--<script src="~/js/creator/image.js"></script>
 <script src="~/js/creator/paragraph.js"></script>
-<script src="~/js/creator/summary.js"></script>
+<script src="~/js/creator/summary.js"></script>-->
 <script src="~/js/creator.js"></script>
+<script src="~/js/creator/others.js"></script>
 @if (articleJson != null)
 {
-    <script>fillFields(@Html.Raw(articleJson.Replace("\\u003Ca", "\\\"")));</script>
+    <script>
+        fillFields(@Html.Raw(articleJson.Replace("\\u003Ca", "\\\"")));
+    </script>
 }

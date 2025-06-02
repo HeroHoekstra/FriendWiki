@@ -23,14 +23,14 @@ function setImage(node, isSummary = false, link = prompt("Insert image URL")) {
         const trimmed = $.trim($(this).text());
 
         if (!isSummary) {
-            data.paragraphs[paragraphPosition].images[imagePosition].alt = trimmed;
+            data.paragraphs[paragraphPosition].images[imagePosition].alternative = trimmed;
         } else {
             data.summary.image.alt = trimmed;
         }
     });
 
     // Add new "add image" button
-    const parent = node.parent().parent();
+    const parent = node.closest('.paragraph');
     if (node.data("preview") === true && !isSummary) {
         node.data("preview", false);
         addImageSelection(parent);
@@ -49,6 +49,8 @@ function setImage(node, isSummary = false, link = prompt("Insert image URL")) {
             alternative: "Your image description"
         }
     }
+    
+    return img;
 }   
 
 function addImageSelection(paragraph) {

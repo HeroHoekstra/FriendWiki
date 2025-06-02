@@ -7,6 +7,7 @@ let data = {
         rows: [],
     }
 };
+let isEdit = false;
 
 $(document).ready(function () {
     // Set title and lead listener
@@ -53,9 +54,12 @@ function setPositions() {
 
 async function submitArticle() {
     try {
-        const json = JSON.stringify(data);
+        const useEdit = window.location.href.includes("editor");
         
-        const response = await fetch("/article/creator", {
+        const json = JSON.stringify(data);
+        const url = useEdit ? "/article/editor" : "/article/creator";
+        
+        const response = await fetch(url, {
             method: "POST",
             body: json,
             headers: {
@@ -78,7 +82,7 @@ async function submitArticle() {
 
 // Editor functions
 function fillFields(json) {
-    console.log(json);
+    isEdit = true;
     data.id = json.Id;
     
     // Title and lead
@@ -110,6 +114,10 @@ function fillFields(json) {
         imageEl.attr("alt", summaryImage.Alternative)
 
         $(".i-alt", summaryImageEl).text(summaryImage.Alternative);
+        $(".i-alt", summaryImageEl).on("focusout", function() {
+            imageEl.attr("alt", $(this).text());
+            data.summary.image.alternative = $(this).text();
+        })
         
         // Show the view
         $("span.i-add", summaryImageEl).hide();
@@ -165,6 +173,20 @@ function fillFields(json) {
         const bodyText = e.Body;
         $(".p-body", $e).text(bodyText);
         data.paragraphs[i].body = bodyText;
+        
+        // Image 
+        $(e.Images).each(function(j, f) {
+            const source = f.Source;
+            const img = setImage(element, false, source);
+            addImageSelection(element);
+            data.paragraphs[i].images[j].source = source; 
+            
+            // Set image alt text
+            const alt = f.Alternative;
+            img.attr("alt", alt);
+            $($(".i-alt", element)[j]).text(alt);
+            data.paragraphs[i].images[j].alternative = alt;
+        });
         
         lastParagraph = $e;
     });
