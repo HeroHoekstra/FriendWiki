@@ -60,7 +60,7 @@ public class ArticleController : Controller
     #region Creating
     
     [HttpGet("creator")]
-    public async Task<IActionResult> Creator()
+    public IActionResult Creator()
     {
         return View();
     }

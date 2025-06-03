@@ -4,79 +4,115 @@ let data = {
     paragraphs: [],
     summary: {
         title: "Summary title",
-        rows: [],
     }
 };
 let isEdit = false;
 
 $(document).ready(function () {
-    // Set title and lead listener
-    $(".title").on("focusout", function() { // "focusout" is used, because "change" only works on input fields and not regular elements
-        $("title").text(`${$(this).text()} - FriendWiki`);
-        data.title = $(this).text(); 
-    });
-    $(".lead").on("focusout", function() {
-        data.lead = $(this).text();
-    });
-    
-    // Also for the summary
-    $(".s-title").on("focusout", function() {
-        data.summary.title = $(this).text(); 
-    });
-    
-    // And set summary image
-    $(".summary-image > .i-add").on("click", function() { 
-        setImage($(this).parent(), true)
-    });
-});
+    $("[data-editable]").each(function () {
+        if ($(this).data("initial-ignore")) {
+            return;
+        }
+        
+        $(this).on("focusout", function () {
+            const keys = getFullPath($(this));
 
-function withWhitespace(html) {
-    return html.replace(/<br\*s\/?>/g, '\n');
-}
-
-function setPositions() {
-    $(".paragraph").each(function(i, e) {
-        if (!$(e).hasClass("prime-add"))
-            $(e).attr("data-position", i - 1);
-    });
-
-    $(".summary-row").each(function(i, e) {
-        if (!$(e).hasClass("prime-add"))
-            $(e).attr("data-position", i - 1);
-    });
-    
-    $(".images").each(function(i, e) {
-        $(".image", $(e)).each(function(i, e) {
-            $(e).attr("data-position", i);
+            const lastKey = keys.pop();
+            const target = keys.reduce((prev, key) => {
+                return prev[key] ??= {};
+            }, data);
+            
+            target[lastKey] = $(this).html();
         });
     });
-}
+    
+    imageListeners($(".summary-image.image"));
+});
 
 async function submitArticle() {
     try {
         const useEdit = window.location.href.includes("editor");
+
+        cleanData();
         
-        const json = JSON.stringify(data);
         const url = useEdit ? "/article/editor" : "/article/creator";
-        
         const response = await fetch(url, {
             method: "POST",
-            body: json,
+            body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json"
             }
         });
         
-        if (!response.ok) {
-            throw Error(response.statusText);
-        }
+        if (!response.ok)
+            throw new Error(await response.json());
         
         const result = await response.json();
-        window.location.href = `/article/${result.id}`;
+        //window.location.href = `/article/${result.id}`;
     } catch (error) {
         console.error(`An error occurred: ${error}`);
     }
+}
+
+function cleanData() {
+    // Remove images with empty source and default alternative text
+    function cleanImages(obj) {
+        if (Array.isArray(obj)) {
+            obj.forEach(cleanImages);
+            return;
+        }
+
+        if (typeof obj === "object" && obj !== null) {
+            for (const key in obj) {
+                if (key === "images" && typeof obj[key] === "object") {
+                    const images = obj[key];
+                    for (const imgKey in images) {
+                        const image = images[imgKey];
+                        if (
+                            image?.source === "" &&
+                            image.alternative === "Your image description"
+                        ) {
+                            delete images[imgKey];
+                        }
+                    }
+                    if (Object.keys(images).length === 0) {
+                        delete obj[key];
+                    }
+                } else {
+                    cleanImages(obj[key]);
+                }
+            }
+        }
+    }
+
+    // Apply whitespace fix and preserve replacements
+    function normalizeStrings(obj) {
+        if (Array.isArray(obj)) {
+            return obj.map(normalizeStrings);
+        }
+
+        if (typeof obj === "object" && obj !== null) {
+            const newObj = {};
+            for (const key in obj) {
+                newObj[key] = normalizeStrings(obj[key]);
+            }
+            return newObj;
+        }
+
+        if (typeof obj === "string") {
+            return obj.replace(/<br\s*\/?>/gi, '\n');
+        }
+
+        return obj;
+    }
+
+    cleanImages(data);
+
+    $.each(data.paragraphs, function (_, p) {
+        p.images = Object.values(p.images).filter(v => v !== undefined && v !== null);
+    });
     
+    return normalizeStrings(data);
 }
 
 
