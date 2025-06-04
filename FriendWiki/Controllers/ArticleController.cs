@@ -44,7 +44,7 @@ public class ArticleController : Controller
         ViewData["PageSize"] = pageSize;
         ViewData["Title"] = query;
         
-        return View("Search");
+        return View();
     }
 
     [HttpGet("random")]
@@ -73,12 +73,16 @@ public class ArticleController : Controller
             return BadRequest();
         }
 
-        // While `article` is technically correct, images are missing Ids
-        // Add Paragraph to Paragraphs's Images
+        // While `article` is technically correct, but images are missing Ids
+        int position = 0;
         foreach (var paragraph in article.Paragraphs)
         {
+            paragraph.Position = position++;
+            
+            int imagePosition = 0;
             foreach (var image in paragraph.Images)
             {
+                image.Position = imagePosition++;
                 image.Paragraph = paragraph;
                 image.ParagraphId = paragraph.Id;
             }
@@ -91,6 +95,14 @@ public class ArticleController : Controller
             
             summaryImage.Summary = article.Summary;
             summaryImage.SummaryId = article.SummaryId;
+        }
+
+        position = 0;
+        foreach (var row in article.Summary.Rows)
+        {
+            row.Position = position++;
+            row.Summary = article.Summary;
+            row.SummaryId = article.SummaryId;
         }
         
         article.Sanitize();

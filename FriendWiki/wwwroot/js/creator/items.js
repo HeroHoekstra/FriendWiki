@@ -81,7 +81,7 @@ function getFullPath(element) {
     return keys;
 }
 
-function setData(element, value) {
+function setData(element, value, replaceHTML = false) {
     const keys = getFullPath(element);
 
     // Insert into `data`
@@ -91,9 +91,15 @@ function setData(element, value) {
     }, data);
 
     target[lastKey] = value;
+    if (replaceHTML) {
+        $(element).html(value);
+    }
 }
 
 function addParagraph(element) {
     const paragraph = addItem(element, "paragraph");
     addImage(paragraph);
+    fixImageData();
+    
+    return paragraph;
 }

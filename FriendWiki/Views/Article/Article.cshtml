@@ -3,6 +3,13 @@
     ViewData["Title"] = Model.Title;
 }
 
+@section NavComponent
+{
+    <a href="/article/editor/@Model.Id">
+        <span class="material-symbols-rounded">edit</span>
+    </a>
+}
+
 <div class="article">
     <div class="summary-wrapper">
         <div class="summary">

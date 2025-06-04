@@ -28,7 +28,7 @@
             </div>
         </div>
         
-        <button onclick="submitArticle()">Submit</button>
+        <button class="add-button" onclick="submitArticle()">Submit</button>
     </div>
     
     <div class="article-wrapper">
@@ -49,7 +49,7 @@
 </div>
 
 <div id="paragraph-template" hidden>
-    <div class="paragraph template" data-editable="paragraphs.{pos}">
+    <div class="paragraph template" data-editable="paragraphs.{pos}" data-array="true">
         <h2 class="p-title paragraph-item" data-editable="paragraphs.{pos}.title" data-parent="paragraph" contenteditable>Paragraph Title</h2>
         <div class="break-line"></div>
         
@@ -78,7 +78,7 @@
 </div>
 
 <div id="summary-row-template" hidden>
-    <div class="summary-row template" data-editable="summary.rows.{pos}">
+    <div class="summary-row template" data-editable="summary.rows.{pos}" data-array="true">
         <div class="break-line"></div>
         
         <h3 class="s-row-title summary-row-item" data-editable="summary.rows.{pos}.title" data-parent="summary-row" contenteditable>Summary row</h3>
@@ -91,7 +91,12 @@
     </div>
 </div>
 
+<div id="id-template" hidden>
+    <div data-editable="id" hidden></div>
+</div>
+
 <script src="~/js/creator.js"></script>
+<script src="~/js/creator/submit.js"></script>
 <script src="~/js/creator/items.js"></script>
 <script src="~/js/creator/images.js"></script>
 @if (articleJson != null)

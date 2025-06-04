@@ -1,4 +1,3 @@
-// Regular images
 function addImage(paragraph) {
     const html = $("#image-template").html();
     const element = $(html).clone(true);
@@ -16,6 +15,8 @@ function addImage(paragraph) {
         const alt = $(".i-alt", $(this))
         setData(alt, alt.html());
     });
+    
+    return element;
 }
 
 function imageListeners(image) {
@@ -59,4 +60,20 @@ function swapImageDisplay(image) {
         $("img", image).hide();
         $(".image-alt", image).hide();
     }
+}
+
+function fixImageData() {
+    $(".paragraph:not(.template):not(.prime-add)").each(function (p) {
+        $(".image", $(this)).each(function (i) {
+            const imageId = data.paragraphs[p].images[i].id;
+            data.paragraphs[p].images[i] = {
+                source: $("img", $(this)).attr("src"),
+                alternative: $("img", $(this)).attr("alt"),
+            };
+            
+            if (imageId) {
+                data.paragraphs[p].images[i].id = imageId;
+            }
+        });
+    });
 }

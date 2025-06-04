@@ -7,6 +7,8 @@ public class Image : IModel
     public string Source { get; set; }
     public string Alternative { get; set; }
     
+    public int? Position { get; set; }
+    
     public long? SummaryId { get; set; }
     public Summary? Summary { get; set; }
     

@@ -7,6 +7,8 @@ public class SummaryRow : IModel
     public string Title { get; set; }
     public string Content { get; set; }
     
+    public int Position { get; set; }
+    
     public long SummaryId { get; set; }
     public Summary Summary { get; set; }
 }

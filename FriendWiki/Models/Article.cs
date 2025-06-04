@@ -9,12 +9,12 @@ public class Article : IModel
     public Article()
     {
         _sanitizer = new HtmlSanitizer();
-    }
+    }   
 
     public void Sanitize()
     {
         // Summary
-        Summary.Title = _sanitizer.Sanitize(Title);
+        Summary.Title = _sanitizer.Sanitize(Summary.Title);
 
         if (Summary.Image != null)
         {

@@ -39,7 +39,7 @@ public class ArticleRepository : Repository<Article>, IArticleRepository
             _context.Entry(article.Summary.Image).Property(i => i.ParagraphId).IsModified = false;
         }
 
-        /*foreach (var row in article.Summary.Rows)
+        foreach (var row in article.Summary.Rows)
         {
             _context.Attach(row);
             _context.Entry(row).State = EntityState.Modified;
@@ -50,13 +50,13 @@ public class ArticleRepository : Repository<Article>, IArticleRepository
             _context.Attach(paragraph);
             _context.Entry(paragraph).State = EntityState.Modified;
 
-            foreach (var image in paragraph.Images)
+            /*foreach (var image in paragraph.Images)
             {
                 _context.Attach(image);
                 _context.Entry(image).State = EntityState.Modified;
                 _context.Entry(image).Property(i => i.SummaryId).IsModified = false;
-            }
-        }*/
+            }*/
+        }
     }
 
     public async Task<long> GetRandomId()
