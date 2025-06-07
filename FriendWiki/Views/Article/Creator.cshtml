@@ -102,6 +102,6 @@
 @if (articleJson != null)
 {
     <script>
-        fillFields(@Html.Raw(articleJson.Replace("\\u003Ca", "\\\"")));
+        fillFields(stringJson(`@articleJson`));
     </script>
 }

@@ -6,6 +6,8 @@ public class Paragraph : IModel
 {
     public long Id { get; set; }
     
+    public bool? Deleted { get; set; }
+    
     public string Title { get; set; }
     public string Body { get; set; }
     

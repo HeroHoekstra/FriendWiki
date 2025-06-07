@@ -13,6 +13,9 @@ public class Article : IModel
 
     public void Sanitize()
     {
+        Title = _sanitizer.Sanitize(Title);
+        Lead = _sanitizer.Sanitize(Lead);
+        
         // Summary
         Summary.Title = _sanitizer.Sanitize(Summary.Title);
 
@@ -43,6 +46,8 @@ public class Article : IModel
     }
     
     public long Id { get; set; }
+    
+    public bool? Deleted { get; set; }
     
     public string Title { get; set; }
     public string Lead { get; set; }

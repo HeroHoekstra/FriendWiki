@@ -122,8 +122,7 @@ public class ArticleController : Controller
     {
         long convertedId = (long)Convert.ToDouble(id);
         
-        Article? article;
-        article = await _articleRepo.GetById(convertedId);
+        Article? article = await _articleRepo.GetById(convertedId);
         if (article == null)
         {
             return NotFound();
@@ -135,8 +134,7 @@ public class ArticleController : Controller
             WriteIndented = false
         };
         string articleJson = JsonSerializer.Serialize(article, options);
-        string escapedJson = articleJson.Replace("'", "\\'");
-        ViewData["ArticleJson"] = escapedJson;
+        ViewData["ArticleJson"] = articleJson.Replace("\u0060", "\\`");
 
         return View("Creator");
     }
@@ -171,7 +169,7 @@ public class ArticleController : Controller
         
         article.Sanitize();
         
-        _articleRepo.Update(article);
+        //await _articleService.Update(article);
         await _articleRepo.Save();
         
         return Json(new { id = article.Id });

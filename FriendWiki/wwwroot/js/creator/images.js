@@ -1,13 +1,13 @@
 function addImage(paragraph) {
     const html = $("#image-template").html();
     const element = $(html).clone(true);
-    
+
     $(".images", paragraph).append(element);
     element.removeClass("template");
-    
-    updatePosition("image", true, paragraph);
+
     imageListeners(element);
-    
+    updatePosition("image", true, paragraph);
+
     $(".image", paragraph).each(function () {
         const img = $("img", $(this));
         setData(img, img.attr("src"));
@@ -66,6 +66,7 @@ function fixImageData() {
     $(".paragraph:not(.template):not(.prime-add)").each(function (p) {
         $(".image", $(this)).each(function (i) {
             const imageId = data.paragraphs[p].images[i].id;
+            console.log($("img", $(this)).attr("alt"));
             data.paragraphs[p].images[i] = {
                 source: $("img", $(this)).attr("src"),
                 alternative: $("img", $(this)).attr("alt"),

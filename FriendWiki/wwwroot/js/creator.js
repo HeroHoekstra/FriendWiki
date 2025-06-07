@@ -68,7 +68,7 @@ function fillFields(json) {
     
     // Paragraph class
     let lastParagraph = $(".paragraph.prime-add")
-    $.each(json.Paragraphs, function (_, paragraph) {
+    $.each(json.Paragraphs, function (p, paragraph) {
         const element = addParagraph(lastParagraph);
 
         data.paragraphs[paragraph.Position].id = paragraph.Id;
@@ -76,18 +76,30 @@ function fillFields(json) {
         setData($(".p-body", element, true), paragraph.Body, true);
         
         // Images
-        $.each(paragraph.Images, function (_, image) {
-            console.log(element);
+        $(".image", element).remove();
+        $.each(paragraph.Images, function (i, image) {
             const imageElement = addImage(element);
-
-            data.paragraphs[paragraph.Position].images[image.Position] = image.Id;
-            enterImage(imageElement, image.Source);
             swapImageDisplay(imageElement);
+            imageElement.attr("data-preview", false);
             
-            $("img", imageElement).attr("alt", image.Alternative);
-            $(".i-alt", imageElement).html(image.Alternative);
+            const img = $("img", imageElement);
+            img.attr("src", image.Source);
+            img.attr("alt", image.Alternative);
+            
+            const alt = $(".i-alt", imageElement);
+            setData(alt, image.Alternative, true);
         });
         
+        addImage(element);
         lastParagraph = element;
     });
+}
+
+function stringJson(string) {
+    string = string.replace(/"/g, '\\"');
+    string = string.replace(/&quot;/g, '"');
+    string = string.replace(/\n/g, '');
+    string = string.replace(/\r/g, '');
+
+    return JSON.parse(string);
 }

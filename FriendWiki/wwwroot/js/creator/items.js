@@ -16,20 +16,25 @@ function addItem(after, template) {
 }
 
 function removeItem(parent) {
+    const position = parent.data("position");
+    parent.remove();
+    
     const keys = getFullPath(parent);
-
     const lastKey = keys.pop();
     const target = keys.reduce((prev, key) => {
         return prev[key] ??= {};
     }, data);
+    
+    if (window.location.href.includes("editor")) {
+        target[position].deleted = true;
+        return;
+    }
     
     if (typeof target === "object") {
         delete target[lastKey];
     } else {
         target.splice(lastKey, 1);
     }
-    
-    parent.remove();
 }
 
 function updatePosition(type, object = false, parent = undefined) {
@@ -37,10 +42,10 @@ function updatePosition(type, object = false, parent = undefined) {
     element.each(function (i) {
         if ($(this).hasClass("prime-add") || $(this).hasClass("template")) {
             return;
-        } 
+        }
         
         let newPosition = parent ? i : i-1;
-        $(this).data("position", newPosition);
+        $(this).attr("data-position", newPosition);
         
         if (object || $(this).data("array")) {
             $("[data-editable]", $(this)).each(function () {
@@ -53,29 +58,33 @@ function updatePosition(type, object = false, parent = undefined) {
 }
 
 function getPositions(element) {
-    const position = parseInt(element.data("position"), 10);
-    const parentClass = element.data("parent");
-
-    if (parentClass) {
-        const parentElement = element.closest(`.${parentClass}`);
-        return [...getPositions(parentElement), position];
+    let result = [];
+    
+    const parent = element.data("parent");
+    if (parent) {
+        const parentElement = element.closest(`.${parent}`);
+        result.push(...getPositions(parentElement));
     }
 
-    return [position];
+    const position = element.data("position");
+    if (position != null)
+        result.push(position);
+    
+    return result;
 }
 
 function getFullPath(element) {
-    const positions = getPositions(element);
+    const positions = getPositions(element).reverse();
     
     const keys = element.data("editable").split('.');
 
     // Update `{pos}` keys
-    let keysUsed = 0;
+    let keysUsed = positions.length-1;
     for (let i = 0; i < keys.length; i++) {
         if (keys[i] !== "{pos}") {
             continue;
         }
-        keys[i] = positions[keysUsed++];
+        keys[i] = positions[keysUsed--];
     }
 
     return keys;
@@ -94,6 +103,8 @@ function setData(element, value, replaceHTML = false) {
     if (replaceHTML) {
         $(element).html(value);
     }
+    
+    return [keys, target[lastKey]];
 }
 
 function addParagraph(element) {

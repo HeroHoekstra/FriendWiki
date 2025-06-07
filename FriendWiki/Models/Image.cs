@@ -4,6 +4,8 @@ public class Image : IModel
 {
     public long Id { get; set; }
     
+    public bool? Deleted { get; set; }
+    
     public string Source { get; set; }
     public string Alternative { get; set; }
     
