@@ -16,17 +16,26 @@ function addItem(after, template) {
 }
 
 function removeItem(parent) {
-    const position = parent.data("position");
-    parent.remove();
-    
     const keys = getFullPath(parent);
     const lastKey = keys.pop();
     const target = keys.reduce((prev, key) => {
         return prev[key] ??= {};
     }, data);
     
-    if (window.location.href.includes("editor")) {
-        target[position].deleted = true;
+    if ($("#is-editing")) {
+        target[lastKey].deleted = true;
+
+        const header = $(".header", parent);
+        
+        header.addClass("deleted");
+        header.append($("#removed-template").html())
+        
+        const button = $(".button-wrapper>.remove-button", parent);
+        button.text("Restore item");
+        
+        const functionString = `restoreItem($(this).closest("[data-editable]"))`
+        button.attr("onclick", functionString);
+        
         return;
     }
     
@@ -35,6 +44,7 @@ function removeItem(parent) {
     } else {
         target.splice(lastKey, 1);
     }
+    parent.remove();
 }
 
 function updatePosition(type, object = false, parent = undefined) {

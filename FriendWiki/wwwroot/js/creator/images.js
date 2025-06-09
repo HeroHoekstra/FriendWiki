@@ -66,7 +66,6 @@ function fixImageData() {
     $(".paragraph:not(.template):not(.prime-add)").each(function (p) {
         $(".image", $(this)).each(function (i) {
             const imageId = data.paragraphs[p].images[i].id;
-            console.log($("img", $(this)).attr("alt"));
             data.paragraphs[p].images[i] = {
                 source: $("img", $(this)).attr("src"),
                 alternative: $("img", $(this)).attr("alt"),

@@ -15,7 +15,7 @@
         <div class="summary">
             <h2 class="s-title">@Html.Raw(Model.Summary.Title)</h2>
             
-            @if (Model.Summary.Image != null)
+            @if (Model.Summary.Image != null && Model.Summary.Image.Deleted != true)
             {
                 <div class="summary-image image">
                     <img src="@Model.Summary.Image.Source" alt="@Model.Summary.Image.Alternative" class="i-add" />
@@ -29,9 +29,13 @@
             <div class="summary-content">
                 @foreach (SummaryRow summaryRow in Model.Summary.Rows)
                 {
+                    if (summaryRow.Deleted == true) continue;
+                    
                     <div class="summary-row">
                         <div class="break-line"></div>
-                        <h3 class="s-row-title summary-row-item">@Html.Raw(summaryRow.Title)</h3>
+                        <div class="header">
+                            <h3 class="s-row-title summary-row-item">@Html.Raw(summaryRow.Title)</h3>
+                        </div>
                         <p class="s-row-content summary-row-item">@Html.Raw(summaryRow.Content)</p>
                     </div>
                 }
@@ -49,10 +53,14 @@
         <div class="content">
             @foreach (Paragraph paragraph in Model.Paragraphs)
             {
+                if (paragraph.Deleted == true) continue;
+                
                 <div class="paragraph">
-                    <h2 class="p-title paragraph-item">@Html.Raw(paragraph.Title)</h2>
+                    <div class="header">
+                        <h2 class="p-title paragraph-item">@Html.Raw(paragraph.Title)</h2>
+                    </div>
                     <div class="break-line"></div>
-        
+
                     <div class="paragraph-content">
                         <div>
                             <p class="p-body paragraph-item">@Html.Raw(paragraph.Body)</p>
@@ -60,6 +68,8 @@
                         <div class="images">
                             @foreach (Image image in paragraph.Images)
                             {
+                                if (image.Deleted == true) continue;
+
                                 <div class="image">
                                     <img src="@image.Source" alt="@image.Alternative" class="i-add"/>
                                     <div class="image-alt">

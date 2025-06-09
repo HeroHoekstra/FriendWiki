@@ -50,14 +50,19 @@
 
 <div id="paragraph-template" hidden>
     <div class="paragraph template" data-editable="paragraphs.{pos}" data-array="true">
-        <h2 class="p-title paragraph-item" data-editable="paragraphs.{pos}.title" data-parent="paragraph" contenteditable>Paragraph Title</h2>
-        <div class="break-line"></div>
-        
-        <div class="paragraph-content">
-            <p class="p-body paragraph-item" data-editable="paragraphs.{pos}.body" data-parent="paragraph" contenteditable>Paragraph body</p>
-            <div class="images"></div>    
+        <div class="header">
+            <h2 class="p-title paragraph-item" data-editable="paragraphs.{pos}.title" data-parent="paragraph" contenteditable>Paragraph Title</h2>
         </div>
         
+        <div class="break-line"></div>
+
+        <div class="paragraph-content">
+            <div>
+                <p class="p-body paragraph-item" data-editable="paragraphs.{pos}.body" data-parent="paragraph" contenteditable>Paragraph body</p>
+            </div>
+            <div class="images"></div>
+        </div>
+
         <div class="button-wrapper">
             <button class="add-button" onclick="addParagraph($(this).closest('.paragraph'))">Add paragraph</button>
             <button class="remove-button" onclick="removeItem($(this).closest('.paragraph'))">Remove paragraph</button>
@@ -81,7 +86,9 @@
     <div class="summary-row template" data-editable="summary.rows.{pos}" data-array="true">
         <div class="break-line"></div>
         
-        <h3 class="s-row-title summary-row-item" data-editable="summary.rows.{pos}.title" data-parent="summary-row" contenteditable>Summary row</h3>
+        <div class="header">
+            <h3 class="s-row-title summary-row-item" data-editable="summary.rows.{pos}.title" data-parent="summary-row" contenteditable>Summary row</h3>
+        </div>
         <p class="s-row-content summary-row-item" data-editable="summary.rows.{pos}.content" data-parent="summary-row" contenteditable>Summary row content</p>
 
         <div class="button-wrapper">
@@ -91,17 +98,23 @@
     </div>
 </div>
 
-<div id="id-template" hidden>
-    <div data-editable="id" hidden></div>
-</div>
-
+<!-- Creator -->
 <script src="~/js/creator.js"></script>
 <script src="~/js/creator/submit.js"></script>
 <script src="~/js/creator/items.js"></script>
 <script src="~/js/creator/images.js"></script>
 @if (articleJson != null)
 {
-    <script>
-        fillFields(stringJson(`@articleJson`));
-    </script>
+    <!-- Editor -->
+    <div id="removed-template" hidden>
+        <span class="material-symbols-rounded" title="This item has been removed and will not show up in the final article">delete</span>        
+    </div>
+    
+    <div id="id-template" hidden>
+        <div class="id" hidden></div>
+    </div>
+    
+    <div id="is-editing" hidden></div>
+    <script src="~/js/editor.js"></script>
+    <script>$(document).ready(function () { fillFields(stringJson(`@articleJson`)); });</script>
 }

@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using FriendWiki.Data;
 using FriendWiki.Models;
 using FriendWiki.Repository.Interface;
@@ -24,9 +26,9 @@ public class ArticleRepository : Repository<Article>, IArticleRepository
             .FirstOrDefaultAsync();
     }
 
-    public new void Update(Article article)
+    /*public new void Update(Article article)
     {
-        _context.Attach(article);
+        /*_context.Attach(article);
         _context.Entry(article).State = EntityState.Modified;
         
         _context.Attach(article.Summary);
@@ -50,14 +52,14 @@ public class ArticleRepository : Repository<Article>, IArticleRepository
             _context.Attach(paragraph);
             _context.Entry(paragraph).State = EntityState.Modified;
 
-            /*foreach (var image in paragraph.Images)
+            foreach (var image in paragraph.Images)
             {
                 _context.Attach(image);
                 _context.Entry(image).State = EntityState.Modified;
                 _context.Entry(image).Property(i => i.SummaryId).IsModified = false;
-            }*/
+            }
         }
-    }
+    }*/
 
     public async Task<long> GetRandomId()
     {
@@ -84,6 +86,70 @@ public class ArticleRepository : Repository<Article>, IArticleRepository
             .ToListAsync();
         
         return (articles, totalCount);
+    }
+
+    public new async Task Update(Article newArticle)
+    {
+        Article? oldArticle = await GetById(newArticle.Id);
+        if (oldArticle == null)
+        {
+            throw new KeyNotFoundException($"Article with id {newArticle.Id} not found");
+        }
+    
+        newArticle.SummaryId = oldArticle.SummaryId;
+        newArticle.Summary.Id = oldArticle.Summary.Id;
+
+        foreach (var row in newArticle.Summary.Rows)
+        {
+            row.SummaryId = oldArticle.Summary.Id;
+        }
+    
+        foreach (var paragraph in newArticle.Paragraphs)
+        {
+            paragraph.ArticleId = newArticle.Id;
+            foreach (var image in paragraph.Images)
+            {
+                // Ensure navigation properties are set for proper FK assignment
+                image.Paragraph = paragraph;
+                image.ParagraphId = paragraph.Id; // Explicitly set FK
+            }
+        }
+
+        // Detach old entities to prevent tracking conflicts
+        _context.Entry(oldArticle).State = EntityState.Detached;
+        _context.Entry(oldArticle.Summary).State = EntityState.Detached;
+        DetachEntities(oldArticle.Summary.Rows);
+        DetachEntities(oldArticle.Paragraphs);
+        foreach (var paragraph in oldArticle.Paragraphs)
+        {
+            DetachEntities(paragraph.Images);
+        }
+
+        // Attach and update the new entity graph
+        _context.Update(newArticle);
+
+        // Explicitly mark new images as 'Added'
+        foreach (var paragraph in newArticle.Paragraphs)
+        {
+            foreach (var image in paragraph.Images)
+            {
+                if (image.Id == 0) // New image
+                {
+                    _context.Entry(image).State = EntityState.Added;
+                }
+            }
+        }
+        
+        var debug = _context.ChangeTracker.DebugView.LongView;
+        Console.WriteLine(debug);
+    }
+
+    private void DetachEntities<T>(IEnumerable<T> entities) where T : class, IModel
+    {
+        foreach (var entity in entities)
+        {
+            _context.Entry(entity).State = EntityState.Detached;
+        }
     }
     
 }

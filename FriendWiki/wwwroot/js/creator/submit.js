@@ -1,6 +1,7 @@
 async function submitArticle() {
     try {
-        const useEdit = window.location.href.includes("editor");
+        const useEdit = !!$("#is-editing").length;
+        console.log(useEdit);
 
         cleanData(data);
         if (!data.paragraphs)
@@ -13,6 +14,8 @@ async function submitArticle() {
             if (value.images)
                 value.images = Object.values(value.images);
         });
+        
+        console.log(JSON.stringify(data))
 
         const url = useEdit ? "/article/editor" : "/article/creator";
         const response = await fetch(url, {

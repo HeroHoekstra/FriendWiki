@@ -12,6 +12,9 @@ public class Paragraph : IModel
     public string Body { get; set; }
     
     public int Position { get; set; }
+    
+    public long ArticleId { get; set; }
+    public Article Article { get; set; }
 
     public ICollection<Image> Images { get; set; } = new List<Image>();
 }

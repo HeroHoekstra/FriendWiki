@@ -169,7 +169,7 @@ public class ArticleController : Controller
         
         article.Sanitize();
         
-        //await _articleService.Update(article);
+        await _articleRepo.Update(article);
         await _articleRepo.Save();
         
         return Json(new { id = article.Id });
