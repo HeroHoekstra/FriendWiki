@@ -76,7 +76,7 @@ function getPositions(element) {
         result.push(...getPositions(parentElement));
     }
 
-    const position = element.data("position");
+    const position = $(element).attr("data-position");
     if (position != null)
         result.push(position);
     

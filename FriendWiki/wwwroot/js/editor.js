@@ -17,7 +17,7 @@ function addIds() {
 }
 
 function indicateRemoved() {
-    $("[data-deleted]").each(function () {
+    $(".deleted[data-deleted]:not(.template)").each(function () {
         const header = $(".header", $(this));
         header.addClass("deleted");
         
@@ -44,6 +44,7 @@ function restoreItem(element) {
     const template = `${element.attr("data-deleted")}-template`;
     const removeButton = $(`#${template} .remove-button`);
     const button = $('.remove-button', element);
+    
 
     button.text(`${removeButton.text()}`);
     button.attr('onclick', removeButton.attr('onclick'));

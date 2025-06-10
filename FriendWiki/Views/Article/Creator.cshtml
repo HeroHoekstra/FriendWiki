@@ -9,16 +9,16 @@
             <h2 class="s-title" data-editable="summary.title" contenteditable>Summary title</h2>
             <div class="summary-image image" data-editable="summary.image" data-parent="summary" data-initial-ignore="true" data-preview="true">
                 <span class="material-symbols-rounded i-add i-add-preview" data-editable="summary.image.source" data-parent="image" data-initial-ignore="true">add</span>
-                <img src="" alt="Your image description" class="i-add" data-editable="summary.image.source" data-parent="image" data-initial-ignore="true" style="display:none;" />
+                <img src="" alt="Your image description" class="i-add" data-editable="summary.image.source" data-parent="image" data-initial-ignore="true" style="display:none;"/>
 
                 <div class="image-alt" style="display:none;">
                     <p class="i-alt" data-editable="summary.image.alternative" data-parent="image" data-initial-ignore="true" contenteditable>Your image description</p>
                     <button class="remove-button" onclick="removeSummaryImage()">remove image</button>
                 </div>
             </div>
-            
+
             <div class="break-line"></div>
-            
+
             <div class="summary-content">
                 <div class="summary-row prime-add">
                     <div class="button-wrapper">
@@ -27,10 +27,10 @@
                 </div>
             </div>
         </div>
-        
+
         <button class="add-button" onclick="submitArticle()">Submit</button>
     </div>
-    
+
     <div class="article-wrapper">
         <div class="title-wrapper">
             <h1 class="title" data-editable="title" contenteditable>Title</h1>
@@ -49,7 +49,7 @@
 </div>
 
 <div id="paragraph-template" hidden>
-    <div class="paragraph template" data-editable="paragraphs.{pos}" data-array="true">
+    <div class="paragraph template" data-editable="paragraphs.{pos}" data-array="true" data-deleted="paragraph">
         <div class="header">
             <h2 class="p-title paragraph-item" data-editable="paragraphs.{pos}.title" data-parent="paragraph" contenteditable>Paragraph Title</h2>
         </div>
@@ -83,7 +83,7 @@
 </div>
 
 <div id="summary-row-template" hidden>
-    <div class="summary-row template" data-editable="summary.rows.{pos}" data-array="true">
+    <div class="summary-row template" data-editable="summary.rows.{pos}" data-array="true" data-deleted="summary-row">
         <div class="break-line"></div>
         
         <div class="header">

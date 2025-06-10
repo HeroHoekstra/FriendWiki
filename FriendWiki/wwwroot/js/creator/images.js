@@ -63,8 +63,19 @@ function swapImageDisplay(image) {
 }
 
 function fixImageData() {
-    $(".paragraph:not(.template):not(.prime-add)").each(function (p) {
+    $(".paragraph:not(.template):not(.prime-add)").each(function (p, el) {
+        if (!data.paragraphs[p]) {
+            data.paragraphs[p] = {
+                title: $(".p-title", el).html(),
+                body: $(".p-body", el).html(),
+                images: []
+            };
+        }
+        
         $(".image", $(this)).each(function (i) {
+            if (!data.paragraphs[p].images[i])
+                data.paragraphs[p].images[i] = {};
+            
             const imageId = data.paragraphs[p].images[i].id;
             data.paragraphs[p].images[i] = {
                 source: $("img", $(this)).attr("src"),

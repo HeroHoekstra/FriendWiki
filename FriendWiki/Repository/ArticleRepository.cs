@@ -23,43 +23,9 @@ public class ArticleRepository : Repository<Article>, IArticleRepository
                 .ThenInclude(s => s.Image)
             .Include(a => a.Paragraphs)
                 .ThenInclude(p => p.Images)
+            .AsNoTracking()
             .FirstOrDefaultAsync();
     }
-
-    /*public new void Update(Article article)
-    {
-        /*_context.Attach(article);
-        _context.Entry(article).State = EntityState.Modified;
-        
-        _context.Attach(article.Summary);
-        _context.Entry(article.Summary).State = EntityState.Modified;
-        
-        if (article.Summary.Image != null)
-        {
-            _context.Attach(article.Summary.Image);
-            _context.Entry(article.Summary.Image).State = EntityState.Modified;
-            _context.Entry(article.Summary.Image).Property(i => i.ParagraphId).IsModified = false;
-        }
-
-        foreach (var row in article.Summary.Rows)
-        {
-            _context.Attach(row);
-            _context.Entry(row).State = EntityState.Modified;
-        }
-
-        foreach (var paragraph in article.Paragraphs)
-        {
-            _context.Attach(paragraph);
-            _context.Entry(paragraph).State = EntityState.Modified;
-
-            foreach (var image in paragraph.Images)
-            {
-                _context.Attach(image);
-                _context.Entry(image).State = EntityState.Modified;
-                _context.Entry(image).Property(i => i.SummaryId).IsModified = false;
-            }
-        }
-    }*/
 
     public async Task<long> GetRandomId()
     {
@@ -94,25 +60,6 @@ public class ArticleRepository : Repository<Article>, IArticleRepository
         if (oldArticle == null)
         {
             throw new KeyNotFoundException($"Article with id {newArticle.Id} not found");
-        }
-    
-        newArticle.SummaryId = oldArticle.SummaryId;
-        newArticle.Summary.Id = oldArticle.Summary.Id;
-
-        foreach (var row in newArticle.Summary.Rows)
-        {
-            row.SummaryId = oldArticle.Summary.Id;
-        }
-    
-        foreach (var paragraph in newArticle.Paragraphs)
-        {
-            paragraph.ArticleId = newArticle.Id;
-            foreach (var image in paragraph.Images)
-            {
-                // Ensure navigation properties are set for proper FK assignment
-                image.Paragraph = paragraph;
-                image.ParagraphId = paragraph.Id; // Explicitly set FK
-            }
         }
 
         // Detach old entities to prevent tracking conflicts
